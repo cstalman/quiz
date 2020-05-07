@@ -10,7 +10,7 @@ import QuizManager from './QuizManager.vue';
 import QuestionsQuiz from './QuestionsQuiz.vue';
 
 export default {
-    props: ['quizzes', 'questions'], 
+    props: ['quizzes'], 
     router: new VueRouter({
         mode: 'history',
         base: 'quiz-editor',
@@ -25,9 +25,10 @@ export default {
                 redirect: {name: 'quizzes'}
             },
             {
-               path: '/questions',
+               path: '/questions/:quizId',
                name: 'questions',
-               component: QuestionsQuiz
+               component: QuestionsQuiz,
+               props: true
             },
             {
                 path: '*',

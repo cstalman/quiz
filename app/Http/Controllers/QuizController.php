@@ -41,15 +41,13 @@ class QuizController extends Controller
     }
 
     /**
-     * Show the questions for quiz
+     * Show the form for creating a new resource.
      *
      * @return \Illuminate\Http\Response
      */
-    public function questions(Quiz $quiz)
+    public function create()
     {
-        return $quiz->questions->map(function( $question) {
-            return $question->only(['id', 'text', 'display_order']);
-        });
+        //
     }
 
     /**

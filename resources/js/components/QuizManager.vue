@@ -7,7 +7,7 @@
                 <input type="text" class="col-sm-2" v-model="quiz.title" :ref="quiz.title">
                 <input type="text" class="col-sm-5" v-model="quiz.description">
                 <a @click="removeQuiz(index)" class="btn btn-primary d-inline-block mb-2 ml-2 text-white remove"><i class="fa fa-times-circle"></i> Verwijderen</a>
-                <router-link :to="{name: 'questions'}" class='btn btn-primary d-inline-block mb-2 ml-2 text-white remove'><i class="fa fa-question-circle"></i> Vragen</router-link>
+                <router-link :to="{name: 'questions', params: {quizId:quiz.id, quizTitle: quiz.title }}" class='btn btn-primary d-inline-block mb-2 ml-2 text-white remove'><i class="fa fa-question-circle"></i> Vragen</router-link>
                 <hr >
             </div>
             <button type="submit" class="btn btn-primary d-inline-block mb-2 text-white"><i class="fa fa-check-circle"></i> Opslaan</button>
@@ -20,6 +20,8 @@
     import QuestionsQuiz from './QuestionsQuiz.vue';
     export default {
         props: ['initialQuizzes', 'questions'],
+
+        components: {QuestionsQuiz},
         data() {
             return {
                 quizzes: this.initialQuizzes, 
@@ -58,17 +60,6 @@
                     }     
                 });
             },
-            saveCategories() {
-                axios.post('/api/categories/upsert', {
-                    categories: this.categories
-                })
-                .then((res) => {
-                    if (res.data.success) {
-                        this.feedback = 'Changes saved.';
-                        this.categories = res.data.categories;
-                    }
-                });
-            }
         }
     }
 </script>

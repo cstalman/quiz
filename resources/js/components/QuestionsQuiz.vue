@@ -1,30 +1,42 @@
 <template>
     <div class="container">
-        <h1 class="my-4">Beheer vragen</h1>
+        <div v-if="isLoading">Vragen ophalen...</div>
+        <div v-else>
+        <h1 class="my-4">Beheer vragen {{quizTitle}}</h1>
         <form @submit.prevent="saveQuestions"> 
             <a @click="addQuestion" class="btn btn-primary d-inline-block mb-2 text-white add"><i class="fa fa-plus-circle"></i> Vraag toevoegen</a>
             <div v-for="(question, index) in questions" :key="question.id">
                 <input type="text" class="col-sm-6" v-model="question.text" :ref="question.text">
                 <input type="text" class="col-sm-1" v-model="question.display_order">
                 <a @click="removeQuestion(index)" class="btn btn-primary d-inline-block mb-2 ml-2 text-white remove"><i class="fa fa-times-circle"></i> Verwijderen</a>
-                <router-link :to="{name: 'antwoorden'}" class='btn btn-primary d-inline-block mb-2 ml-2 text-white remove'><i class="fa fa-question-circle"></i> Antwoorden</router-link>
+                <!--<router-link :to="{name: 'antwoorden'}" class='btn btn-primary d-inline-block mb-2 ml-2 text-white remove'><i class="fa fa-question-circle"></i> Antwoorden</router-link>-->
                 <hr >
             </div>
             <button type="submit" class="btn btn-primary d-inline-block mb-2 text-white"><i class="fa fa-check-circle"></i> Opslaan</button>
             <div>{{ feedback }}</div>
         </form>
+        </div>
     </div>
 </template>
 
 <script>
+    import QuizManager from './QuizManager.vue';
     import QuestionsQuiz from './QuestionsQuiz.vue';
+    
     export default {
-        props: ['initialQuestions'],
+        props: ['quizTitle', 'questions'],
         data() {
             return {
-                questions: this.initialQuestions, 
+                isLoading: true,
+                questions: {},
                 feedback: ''
             }
+        },
+        async created() {
+            const response = await axios.get('api/quizzes/1/questions')
+            this.questions = response.data.data
+            this.isLoading = false
+
         },
         methods: {
             removeQuestion(index) {

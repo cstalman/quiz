@@ -16,9 +16,11 @@ class QuestionController extends Controller
     {
         $this->authorize('manage', 'App\Question');
         $questions = Question::orderBy('display_order')->get();
-        return view('admin.questions.index', [
+        return ['success' => true, 'questions' => $questions];
+        /*return view('admin.questions.index', [
             'questions' => $questions
         ]);
+        */
     }
 
     public function insup( Request $request) {
