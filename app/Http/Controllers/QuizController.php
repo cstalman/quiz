@@ -33,6 +33,8 @@ class QuizController extends Controller
                 Quiz::where('id', $quiz['id'])->update($quiz);
             }
             else {
+                $quiz['created_at'] = date('Y-m-d h:m:s');
+                $quiz['updated_at'] = date('Y-m-d h:m:s');
                 Quiz::create($quiz);
             }
 

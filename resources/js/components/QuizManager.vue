@@ -1,13 +1,13 @@
 <template>
     <div class="container">
-        <h1 class="my-4">Beheer toetsen</h1>
+        <h2 class="my-4">Beheer toetsen</h2>
         <form @submit.prevent="saveQuizzes"> 
             <a @click="addQuiz" class="btn btn-primary d-inline-block mb-2 text-white add"><i class="fa fa-plus-circle"></i> Toets toevoegen</a>
             <div v-for="(quiz, index) in quizzes" :key="quiz.id">
                 <input type="text" class="col-sm-2" v-model="quiz.title" :ref="quiz.title">
                 <input type="text" class="col-sm-5" v-model="quiz.description">
                 <a @click="removeQuiz(index)" class="btn btn-primary d-inline-block mb-2 ml-2 text-white remove"><i class="fa fa-times-circle"></i> Verwijderen</a>
-                <router-link :to="{name: 'questions'}" class='btn btn-primary d-inline-block mb-2 ml-2 text-white remove'><i class="fa fa-question-circle"></i> Vragen</router-link>
+                <!--<router-link :to="{name: 'questions', params: { key: quiz.id }}" class='btn btn-primary d-inline-block mb-2 ml-2 text-white remove'><i class="fa fa-question-circle"></i> Vragen</router-link>-->
                 <hr >
             </div>
             <button type="submit" class="btn btn-primary d-inline-block mb-2 text-white"><i class="fa fa-check-circle"></i> Opslaan</button>
@@ -17,12 +17,12 @@
 </template>
 
 <script>
-    import QuestionsQuiz from './QuestionsQuiz.vue';
+
     export default {
-        props: ['initialQuizzes', 'questions'],
+        props: ['initialQuizzes'],
         data() {
             return {
-                quizzes: this.initialQuizzes, 
+                quizzes: _.cloneDeep(this.initialQuizzes), 
                 feedback: ''
             }
         },
@@ -88,4 +88,5 @@
             margin-bottom: 10px;
         }
     }
+
 </style>

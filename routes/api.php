@@ -22,8 +22,4 @@ Route::post('/quizzes/insup', 'QuizController@insup');
 
 Route::delete('/quizzes/{quiz}', 'QuizController@destroy');
 
-Route::get('/quizzes/{quiz}/questions', 'QuizController@questions');
-
-Route::post('/questions/{quiz}/insup', 'QuestionController@insup');
-
-Route::delete('/questions/{quiz}/{question}', 'QuestionController@destroy');
+Route::post('/questions/add', 'QuestionController@store');

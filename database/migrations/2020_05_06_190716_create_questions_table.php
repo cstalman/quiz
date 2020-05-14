@@ -15,10 +15,14 @@ class CreateQuestionsTable extends Migration
     {
         Schema::create('questions', function (Blueprint $table) {
             $table->id();
-            $table->integer('quiz_id');
+            $table->unsignedBigInteger('quiz_id');
             $table->string('text');
             $table->integer('display_order');
             $table->timestamps();
+            $table->foreign('quiz_id')
+            ->references('id')
+            ->on('quizzes')
+            ->onDelete('cascade');
         });
     }
 

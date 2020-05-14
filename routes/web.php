@@ -13,16 +13,14 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
-
 Auth::routes(['verify' => true]);
 
-Route::get('/home', 'HomeController@index')->name('home')->middleware('verified');
+Route::get('/', 'HomeController@index')->name('home')->middleware('verified');
 
 Route::get('/quizzes', 'QuizController@index');
-Route::get('/questions', 'QuestionController@index');
+
 Route::get('/quiz-editor/{any?}', 'AdminController@quiz')
     ->middleware('can:edit-quiz')
     ->where('any', '.*');
+//Route::get('/questions', 'QuestionController@index');
+//Route::get('/quizzes/{quiz}/questions', 'QuestionController@index');

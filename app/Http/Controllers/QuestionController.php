@@ -12,31 +12,13 @@ class QuestionController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index($quiz)
     {
-        $this->authorize('manage', 'App\Question');
-        $questions = Question::orderBy('display_order')->get();
-        return view('admin.questions.index', [
-            'questions' => $questions
-        ]);
+        //
     }
 
     public function insup( Request $request) {
-        $this->authorize('manage', 'App\Question');
-        $questions = $request->post('questions');
-        
-        foreach($questions as $question) {
-            if ($question['id']) {
-                $question['created_at'] = date('Y-m-d h:m:s', strtotime($question['created_at']));
-                $question['updated_at'] = date('Y-m-d h:m:s', strtotime($question['updated_at']));
-                Question::where('id', $question['id'])->update($question);
-            }
-            else {
-                Question::create($question);
-            }
-
-        }
-        return ['success' => true, 'questions' => Question::all()];
+        //
     }
 
     /**
@@ -57,7 +39,17 @@ class QuestionController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        if(!$request->user()->can('edit-question')) {
+            return response('Geen toegang', 403);
+        }
+
+        $request->validate([
+            'text' => 'required|max:255',
+            'display_order' => 'required|numeric|min:0',
+            'quiz_id' => 'required|numeric'
+        ]);
+
+        Question::create($request->post());
     }
 
     /**

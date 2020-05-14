@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
-@section('title', '- Quiz editor')
+@section('title', '- Quiz Editor')
 
 @section('content')
-    <quiz-editor :quizzes="{{ $quizzes }}"></quiz-editor>
+    <quiz-editor :quizzes="{{$quizzes}}"></quiz-editor>
 @endsection

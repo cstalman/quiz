@@ -6,8 +6,6 @@ use Illuminate\Database\Eloquent\Model;
 
 class Quiz extends Model
 {
-    protected $dateFormat = 'U';
-
     protected $guarded = [];
 
     public function questions() {

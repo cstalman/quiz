@@ -182,5 +182,8 @@ return [
         'title'                 => 'titel',
         'username'              => 'gebruikersnaam',
         'year'                  => 'jaar',
+        'text'                  => 'vraagtekst',
+        'display_order'         => 'volgorde',
+        'quiz_id'               => 'toets'
     ],
 ];
