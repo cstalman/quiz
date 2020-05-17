@@ -26,7 +26,14 @@
                 feedback: ''
             }
         },
+        created() {
+            this.fetchQuizzes();
+        },
         methods: {
+            fetchQuizzes() {
+                axios.get('/api/quizzes')
+                    .then(res => this.quizzes = res.data);
+            },
             removeQuiz(index) {
                if (confirm('Weet je het zeker?')) {
                    let id = this.quizzes[index].id

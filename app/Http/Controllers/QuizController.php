@@ -55,6 +55,17 @@ class QuizController extends Controller
     }
 
     /**
+     * Return all the quizzes
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function quizzes()
+    {
+        $this->authorize('manage', 'App\Quiz');
+        return Quiz::orderBy('title')->get();
+    }
+
+    /**
      * Store a newly created resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request

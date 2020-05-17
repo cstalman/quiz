@@ -1935,14 +1935,22 @@ __webpack_require__.r(__webpack_exports__);
     };
   },
   created: function created() {
+    this.fetchQuizzes();
     this.fetchQuestions();
   },
   methods: {
-    fetchQuestions: function fetchQuestions() {
+    fetchQuizzes: function fetchQuizzes() {
       var _this = this;
 
+      axios.get('/api/quizzes').then(function (res) {
+        return _this.quizzes = res.data;
+      });
+    },
+    fetchQuestions: function fetchQuestions() {
+      var _this2 = this;
+
       axios.get("/api/quizzes/".concat(this.quizId, "/questions")).then(function (res) {
-        return _this.questions = res.data;
+        return _this2.questions = res.data;
       });
     }
   }
@@ -2147,7 +2155,17 @@ __webpack_require__.r(__webpack_exports__);
       feedback: ''
     };
   },
+  created: function created() {
+    this.fetchQuizzes();
+  },
   methods: {
+    fetchQuizzes: function fetchQuizzes() {
+      var _this = this;
+
+      axios.get('/api/quizzes').then(function (res) {
+        return _this.quizzes = res.data;
+      });
+    },
     removeQuiz: function removeQuiz(index) {
       if (confirm('Weet je het zeker?')) {
         var id = this.quizzes[index].id;
@@ -2160,7 +2178,7 @@ __webpack_require__.r(__webpack_exports__);
       }
     },
     addQuiz: function addQuiz() {
-      var _this = this;
+      var _this2 = this;
 
       this.quizzes.push({
         id: 0,
@@ -2170,18 +2188,18 @@ __webpack_require__.r(__webpack_exports__);
       this.$nextTick(function () {
         window.scrollTo(0, document.body.scrollHeight);
 
-        _this.$refs[''][0].focus();
+        _this2.$refs[''][0].focus();
       });
     },
     saveQuizzes: function saveQuizzes() {
-      var _this2 = this;
+      var _this3 = this;
 
       axios.post('/api/quizzes/insup', {
         quizzes: this.quizzes
       }).then(function (res) {
         if (res.data.success) {
-          _this2.feedback = 'De wijzigingen zijn opgeslagen';
-          _this2.quizzes = res.data.quizzes;
+          _this3.feedback = 'De wijzigingen zijn opgeslagen';
+          _this3.quizzes = res.data.quizzes;
         }
       });
     }
@@ -38566,7 +38584,7 @@ var render = function() {
       [
         _c("option", { attrs: { value: "" } }, [_vm._v("Kies een toets")]),
         _vm._v(" "),
-        _vm._l(_vm.initialQuizzes, function(quiz) {
+        _vm._l(_vm.quizzes, function(quiz) {
           return _c("option", { key: quiz.id, domProps: { value: quiz.id } }, [
             _vm._v(_vm._s(quiz.title))
           ])

@@ -31,5 +31,7 @@ Route::get('/questions/{question}', function (Question $question) {
     return $question;
 });
 
+Route::get('/quizzes', 'QuizController@quizzes');
+
 Route::get('/quizzes/{quiz}/questions', 'QuizController@questions');
 
