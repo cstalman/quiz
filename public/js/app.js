@@ -2083,6 +2083,10 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: ['initialQuizzes'],
   data: function data() {
@@ -39008,10 +39012,11 @@ var render = function() {
     _vm._v(" "),
     _c(
       "ul",
+      { staticClass: "list-group mt-3" },
       _vm._l(_vm.answers, function(answer) {
         return _c(
           "li",
-          { key: answer.id },
+          { key: answer.id, staticClass: "list-group-item" },
           [
             _c(
               "router-link",
@@ -39056,81 +39061,90 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("div", { staticClass: "question-list" }, [
-    _c("label", { attrs: { for: "quiz" } }, [_vm._v("Toets")]),
+  return _c("div", { staticClass: "container" }, [
+    _c("h2", { staticClass: "my-4" }, [_vm._v("Beheer vragen")]),
     _vm._v(" "),
-    _c(
-      "select",
-      {
-        directives: [
-          {
-            name: "model",
-            rawName: "v-model",
-            value: _vm.quizId,
-            expression: "quizId"
-          }
-        ],
-        staticClass: "form-control",
-        attrs: { id: "quiz", required: "" },
-        on: {
-          change: [
-            function($event) {
-              var $$selectedVal = Array.prototype.filter
-                .call($event.target.options, function(o) {
-                  return o.selected
-                })
-                .map(function(o) {
-                  var val = "_value" in o ? o._value : o.value
-                  return val
-                })
-              _vm.quizId = $event.target.multiple
-                ? $$selectedVal
-                : $$selectedVal[0]
-            },
-            _vm.fetchQuestions
-          ]
-        }
-      },
-      [
-        _c("option", { attrs: { value: "" } }, [_vm._v("Kies een toets")]),
-        _vm._v(" "),
-        _vm._l(_vm.quizzes, function(quiz) {
-          return _c("option", { key: quiz.id, domProps: { value: quiz.id } }, [
-            _vm._v(_vm._s(quiz.title))
-          ])
-        })
-      ],
-      2
-    ),
-    _vm._v(" "),
-    _c(
-      "ul",
-      _vm._l(_vm.questions, function(question) {
-        return _c(
-          "li",
-          { key: question.id },
-          [
-            _c(
-              "router-link",
-              {
-                attrs: {
-                  to: { name: "edit-question", params: { id: question.id } }
-                }
-              },
-              [
-                _vm._v(
-                  "\n                " +
-                    _vm._s(question.text) +
-                    "\n            "
-                )
-              ]
-            )
+    _c("div", { staticClass: "question-list" }, [
+      _c("label", { attrs: { for: "quiz" } }, [_vm._v("Kies een toets")]),
+      _vm._v(" "),
+      _c(
+        "select",
+        {
+          directives: [
+            {
+              name: "model",
+              rawName: "v-model",
+              value: _vm.quizId,
+              expression: "quizId"
+            }
           ],
-          1
-        )
-      }),
-      0
-    )
+          staticClass: "form-control",
+          attrs: { id: "quiz", required: "" },
+          on: {
+            change: [
+              function($event) {
+                var $$selectedVal = Array.prototype.filter
+                  .call($event.target.options, function(o) {
+                    return o.selected
+                  })
+                  .map(function(o) {
+                    var val = "_value" in o ? o._value : o.value
+                    return val
+                  })
+                _vm.quizId = $event.target.multiple
+                  ? $$selectedVal
+                  : $$selectedVal[0]
+              },
+              _vm.fetchQuestions
+            ]
+          }
+        },
+        [
+          _c("option", { attrs: { value: "" } }, [_vm._v("Kies een toets")]),
+          _vm._v(" "),
+          _vm._l(_vm.quizzes, function(quiz) {
+            return _c(
+              "option",
+              { key: quiz.id, domProps: { value: quiz.id } },
+              [_vm._v(_vm._s(quiz.title))]
+            )
+          })
+        ],
+        2
+      ),
+      _vm._v(" "),
+      _c("div", [_vm._v(_vm._s(_vm.feedback))]),
+      _vm._v(" "),
+      _c(
+        "ul",
+        { staticClass: "list-group mt-3" },
+        _vm._l(_vm.questions, function(question) {
+          return _c(
+            "li",
+            { key: question.id, staticClass: "list-group-item" },
+            [
+              _c(
+                "router-link",
+                {
+                  attrs: {
+                    to: { name: "edit-question", params: { id: question.id } }
+                  }
+                },
+                [
+                  _vm._v(
+                    "\n                    " +
+                      _vm._s(question.text) +
+                      "\n                "
+                  )
+                ]
+              )
+            ],
+            1
+          )
+        }),
+        0
+      )
+    ])
   ])
 }
 var staticRenderFns = []

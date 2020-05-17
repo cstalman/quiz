@@ -1,17 +1,21 @@
 <template>
-    <div class="question-list">
-        <label for="quiz">Toets</label>
-        <select id="quiz" class="form-control" v-model="quizId" @change="fetchQuestions" required>
-            <option value="">Kies een toets</option>
-            <option v-for="quiz in quizzes" :value="quiz.id" :key="quiz.id">{{quiz.title}}</option>
-        </select>
-        <ul>
-            <li v-for="question in questions" :key="question.id">
-                <router-link :to="{name: 'edit-question', params: {id: question.id}}">
-                    {{question.text}}
-                </router-link>
-            </li>
-        </ul>
+    <div class="container">
+        <h2 class="my-4">Beheer vragen</h2>
+        <div class="question-list">
+            <label for="quiz">Kies een toets</label>
+            <select id="quiz" class="form-control" v-model="quizId" @change="fetchQuestions" required>
+                <option value="">Kies een toets</option>
+                <option v-for="quiz in quizzes" :value="quiz.id" :key="quiz.id">{{quiz.title}}</option>
+            </select>
+            <div>{{ feedback }}</div>
+            <ul class="list-group mt-3">
+                <li v-for="question in questions" :key="question.id" class="list-group-item">
+                    <router-link :to="{name: 'edit-question', params: {id: question.id}}">
+                        {{question.text}}
+                    </router-link>
+                </li>
+            </ul>
+        </div>
     </div>
 </template>
 

@@ -5,8 +5,8 @@
             <option value="">Kies een vraag</option>
             <option v-for="question in initialQuestions" :value="question.id" :key="question.id">{{question.text}}</option>
         </select>
-        <ul>
-            <li v-for="answer in answers" :key="answer.id">
+        <ul class="list-group mt-3">
+            <li v-for="answer in answers" :key="answer.id" class="list-group-item">
                 <router-link :to="{name: 'edit-answer', params: {id: answer.id}}">
                     {{answer.text}}
                 </router-link>
