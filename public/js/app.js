@@ -2329,6 +2329,11 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: ['initialQuizzes'],
   data: function data() {
@@ -39445,6 +39450,7 @@ var render = function() {
     _c(
       "form",
       {
+        staticClass: "question-form",
         on: {
           submit: function($event) {
             $event.preventDefault()
@@ -39466,71 +39472,75 @@ var render = function() {
         ),
         _vm._v(" "),
         _vm._l(_vm.quizzes, function(quiz, index) {
-          return _c("div", { key: quiz.id }, [
-            _c("input", {
-              directives: [
-                {
-                  name: "model",
-                  rawName: "v-model",
-                  value: quiz.title,
-                  expression: "quiz.title"
-                }
-              ],
-              ref: quiz.title,
-              refInFor: true,
-              staticClass: "col-sm-2",
-              attrs: { type: "text" },
-              domProps: { value: quiz.title },
-              on: {
-                input: function($event) {
-                  if ($event.target.composing) {
-                    return
+          return _c("div", { key: quiz.id, staticClass: "form-row" }, [
+            _c("div", { staticClass: "form-group col-md-4" }, [
+              _c("input", {
+                directives: [
+                  {
+                    name: "model",
+                    rawName: "v-model",
+                    value: quiz.title,
+                    expression: "quiz.title"
                   }
-                  _vm.$set(quiz, "title", $event.target.value)
-                }
-              }
-            }),
-            _vm._v(" "),
-            _c("input", {
-              directives: [
-                {
-                  name: "model",
-                  rawName: "v-model",
-                  value: quiz.description,
-                  expression: "quiz.description"
-                }
-              ],
-              staticClass: "col-sm-5",
-              attrs: { type: "text" },
-              domProps: { value: quiz.description },
-              on: {
-                input: function($event) {
-                  if ($event.target.composing) {
-                    return
-                  }
-                  _vm.$set(quiz, "description", $event.target.value)
-                }
-              }
-            }),
-            _vm._v(" "),
-            _c(
-              "a",
-              {
-                staticClass:
-                  "btn btn-primary d-inline-block mb-2 ml-2 text-white remove",
+                ],
+                ref: quiz.title,
+                refInFor: true,
+                staticClass: "form-control",
+                attrs: { type: "text" },
+                domProps: { value: quiz.title },
                 on: {
-                  click: function($event) {
-                    return _vm.removeQuiz(index)
+                  input: function($event) {
+                    if ($event.target.composing) {
+                      return
+                    }
+                    _vm.$set(quiz, "title", $event.target.value)
                   }
                 }
-              },
-              [
-                _c("i", { staticClass: "fa fa-times-circle" }),
-                _vm._v(" Verwijderen")
-              ]
-            ),
+              })
+            ]),
             _vm._v(" "),
-            _c("hr")
+            _c("div", { staticClass: "form-group col-md-6" }, [
+              _c("input", {
+                directives: [
+                  {
+                    name: "model",
+                    rawName: "v-model",
+                    value: quiz.description,
+                    expression: "quiz.description"
+                  }
+                ],
+                staticClass: "form-control",
+                attrs: { type: "text" },
+                domProps: { value: quiz.description },
+                on: {
+                  input: function($event) {
+                    if ($event.target.composing) {
+                      return
+                    }
+                    _vm.$set(quiz, "description", $event.target.value)
+                  }
+                }
+              })
+            ]),
+            _vm._v(" "),
+            _c("div", { staticClass: "form-group col-md-2" }, [
+              _c(
+                "a",
+                {
+                  staticClass:
+                    "btn btn-primary d-inline-block mb-2 ml-2 text-white remove",
+                  on: {
+                    click: function($event) {
+                      return _vm.removeQuiz(index)
+                    }
+                  }
+                },
+                [
+                  _c("i", { staticClass: "fa fa-times-circle" }),
+                  _vm._v(" Verwijderen")
+                ]
+              )
+            ])
           ])
         }),
         _vm._v(" "),
