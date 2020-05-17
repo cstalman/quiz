@@ -66,17 +66,6 @@ class QuizController extends Controller
     }
 
     /**
-     * Display the specified resource.
-     *
-     * @param  \App\Quiz  $quiz
-     * @return \Illuminate\Http\Response
-     */
-    public function show(Quiz $quiz)
-    {
-        //
-    }
-
-    /**
      * Show the form for editing the specified resource.
      *
      * @param  \App\Quiz  $quiz

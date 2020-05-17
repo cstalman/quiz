@@ -1,7 +1,7 @@
 <template>
     <div class="container">
         <h2 class="my-4">Vraag</h2>
-        <form class="question-form" @submit.prevent="save" novalidate>
+        <form class="question-form" @submit.prevent="save">
             <div class="form-row">
                 <div class="form-group col-md-6">
                     <label for="question_text">Vraagtekst</label>
@@ -28,21 +28,40 @@
 </template>
 
 <script>
+
+    function newQuestion() {
+        return {
+            quiz_id: '',
+            text: '',
+            display_order: ''
+        };
+    }
+
     export default {
-        props: ['initial-quizzes'],
+        props: ['initial-quizzes', 'id'],
         data() {
             return {
-                question: {
-                    quiz_id: '',
-                    text: '',
-                    display_order: ''
-                },
+                question: newQuestion(),
                 errors: []
             };
         },
+        created() {
+            if(this.id) {
+                axios.get('/api/questions/' + this.id)
+                    .then(res => this.question = res.data);
+            }
+        },
+        beforeRouteLeave(to, from, next) {
+            this.question = newQuestion();
+            next();
+        },
         methods: {
             save() {
-                axios.post('/api/questions/add', this.question)
+                let url = '/api/questions/add';
+                if (this.id) {
+                    url = '/api/questions/' + this.id;
+                }
+                axios.post(url, this.question)
                     .then(res => {
                         this.$router.push('/');
                     })

@@ -83,7 +83,17 @@ class QuestionController extends Controller
      */
     public function update(Request $request, Question $question)
     {
-        //
+        if(!$request->user()->can('edit-question')) {
+            return response('Geen toegang', 403);
+        }
+
+        $request->validate([
+            'text' => 'required|max:255',
+            'display_order' => 'required|numeric|min:0',
+            'quiz_id' => 'required|numeric'
+        ]);
+
+        $question->update($request->post());
     }
 
     /**

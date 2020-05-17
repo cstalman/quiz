@@ -1,5 +1,6 @@
 <?php
 
+use App\Question;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -23,3 +24,12 @@ Route::post('/quizzes/insup', 'QuizController@insup');
 Route::delete('/quizzes/{quiz}', 'QuizController@destroy');
 
 Route::post('/questions/add', 'QuestionController@store');
+
+Route::post('/questions/{question}', 'QuestionController@update');
+
+Route::get('/questions/{question}', function (Question $question) {
+    return $question;
+});
+
+Route::get('/quizzes/{quiz}/questions', 'QuizController@questions');
+

@@ -7,6 +7,9 @@
                 <router-link class="nav-link" :to="{name: 'quizzes'}">Toetsen</router-link>
             </li>
             <li class="nav-item">
+                <router-link class="nav-link" :to="{name: 'questions'}">Vragen</router-link>
+            </li>
+            <li class="nav-item">
                 <router-link class="nav-link" :to="{name: 'add-question'}">Vraag toevoegen</router-link>
             </li>
             </ul>
@@ -19,6 +22,7 @@
     import VueRouter from 'vue-router';
     import QuizManager from './QuizManager.vue';
     import QuestionsQuiz from './QuestionsQuiz.vue';
+    import QuestionList from './QuestionList.vue';
 
     export default {
         props: ['quizzes'],       
@@ -36,9 +40,20 @@
                     redirect: {name: 'quizzes'}
                 },
                 {
+                    path: '/questions',
+                    name: 'questions',
+                    component: QuestionList
+                },
+                {
                     path: '/add-question',
                     name: 'add-question',
                     component: QuestionsQuiz
+                },
+                {
+                    path: '/edit-question/:id',
+                    name: 'edit-question',
+                    component: QuestionsQuiz,
+                    props: true
                 },
                 {
                     path: '*',
