@@ -31,7 +31,7 @@
                if (confirm('Weet je het zeker?')) {
                    let id = this.quizzes[index].id
                    if (id > 0) {
-                       axios.delete('api/quizzes/' + id);
+                       axios.delete('/api/quizzes/' + id);
                    }
                    this.quizzes.splice(index, 1);
                }
@@ -48,7 +48,7 @@
                 });
             },
             saveQuizzes() {
-                axios.post('api/quizzes/insup', {
+                axios.post('/api/quizzes/insup', {
                     quizzes: this.quizzes
                 })
                 .then((res) => {
@@ -58,17 +58,6 @@
                     }     
                 });
             },
-            saveCategories() {
-                axios.post('/api/categories/upsert', {
-                    categories: this.categories
-                })
-                .then((res) => {
-                    if (res.data.success) {
-                        this.feedback = 'Changes saved.';
-                        this.categories = res.data.categories;
-                    }
-                });
-            }
         }
     }
 </script>

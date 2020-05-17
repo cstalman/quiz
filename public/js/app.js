@@ -2065,7 +2065,7 @@ __webpack_require__.r(__webpack_exports__);
         var id = this.quizzes[index].id;
 
         if (id > 0) {
-          axios["delete"]('api/quizzes/' + id);
+          axios["delete"]('/api/quizzes/' + id);
         }
 
         this.quizzes.splice(index, 1);
@@ -2088,24 +2088,12 @@ __webpack_require__.r(__webpack_exports__);
     saveQuizzes: function saveQuizzes() {
       var _this2 = this;
 
-      axios.post('api/quizzes/insup', {
+      axios.post('/api/quizzes/insup', {
         quizzes: this.quizzes
       }).then(function (res) {
         if (res.data.success) {
           _this2.feedback = 'De wijzigingen zijn opgeslagen';
           _this2.quizzes = res.data.quizzes;
-        }
-      });
-    },
-    saveCategories: function saveCategories() {
-      var _this3 = this;
-
-      axios.post('/api/categories/upsert', {
-        categories: this.categories
-      }).then(function (res) {
-        if (res.data.success) {
-          _this3.feedback = 'Changes saved.';
-          _this3.categories = res.data.categories;
         }
       });
     }
