@@ -3,5 +3,5 @@
 @section('title', '- Quiz Editor')
 
 @section('content')
-    <quiz-editor :quizzes="{{$quizzes}}"></quiz-editor>
+    <quiz-editor :quizzes="{{$quizzes}}" :questions="{{$questions}}"></quiz-editor>
 @endsection

@@ -1,5 +1,6 @@
 <?php
 
+use App\Answer;
 use App\Question;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -19,19 +20,23 @@ Route::get('/user', function (Request $request) {
     return $request->user();
 });
 
-Route::post('/quizzes/insup', 'QuizController@insup');
 
+Route::get('/quizzes', 'QuizController@quizzes');
+Route::post('/quizzes/insup', 'QuizController@insup');
 Route::delete('/quizzes/{quiz}', 'QuizController@destroy');
 
-Route::post('/questions/add', 'QuestionController@store');
-
-Route::post('/questions/{question}', 'QuestionController@update');
+Route::get('/quizzes/{quiz}/questions', 'QuizController@questions');
 
 Route::get('/questions/{question}', function (Question $question) {
     return $question;
 });
+Route::post('/questions/add', 'QuestionController@store');
+Route::post('/questions/{question}', 'QuestionController@update');
 
-Route::get('/quizzes', 'QuizController@quizzes');
+Route::get('/questions/{question}/answers', 'QuestionController@answers');
 
-Route::get('/quizzes/{quiz}/questions', 'QuizController@questions');
-
+Route::get('/answers/{answer}', function (Answer $answer) {
+    return $answer;
+});
+Route::post('/answers/add', 'AnswerController@store');
+Route::post('/answers/{answer}', 'AnswerController@update');

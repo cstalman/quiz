@@ -12,8 +12,14 @@
             <li class="nav-item">
                 <router-link class="nav-link" :to="{name: 'add-question'}">Vraag toevoegen</router-link>
             </li>
+             <li class="nav-item">
+                <router-link class="nav-link" :to="{name: 'answers'}">Antwoorden</router-link>
+            </li>
+            <li class="nav-item">
+                <router-link class="nav-link" :to="{name: 'add-answer'}">Antwoord toevoegen</router-link>
+            </li>
             </ul>
-        <router-view :initial-quizzes="quizzes"></router-view>
+        <router-view :initial-quizzes="quizzes" :initial-questions="questions"></router-view>
 
     </div>
 </template>
@@ -23,9 +29,11 @@
     import QuizManager from './QuizManager.vue';
     import QuestionsQuiz from './QuestionsQuiz.vue';
     import QuestionList from './QuestionList.vue';
+    import Answer from './Answer.vue';
+    import AnswerList from './AnswerList.vue';
 
     export default {
-        props: ['quizzes'],       
+        props: ['quizzes', 'questions'],       
         router: new VueRouter({
             mode: 'history',
             base: 'quiz-editor',
@@ -53,6 +61,22 @@
                     path: '/edit-question/:id',
                     name: 'edit-question',
                     component: QuestionsQuiz,
+                    props: true
+                },
+                {
+                    path: '/answers',
+                    name: 'answers',
+                    component: AnswerList
+                },
+                {
+                    path: '/add-answer',
+                    name: 'add-answer',
+                    component: Answer
+                },
+                {
+                    path: '/edit-answer/:id',
+                    name: 'edit-answer',
+                    component: Answer,
                     props: true
                 },
                 {

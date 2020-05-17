@@ -41,6 +41,8 @@
         props: ['initial-quizzes', 'id'],
         data() {
             return {
+                questions: _.cloneDeep(this.initialQuestions), 
+                feedback: '',
                 question: newQuestion(),
                 errors: []
             };

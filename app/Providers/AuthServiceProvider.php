@@ -33,5 +33,8 @@ class AuthServiceProvider extends ServiceProvider
         Gate::define('edit-question', function ($user) {
             return $user->is_admin;
         });
+        Gate::define('edit-answer', function ($user) {
+            return $user->is_admin;
+        });
     }
 }

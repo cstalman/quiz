@@ -2,25 +2,19 @@
 
 namespace App\Http\Controllers;
 
-use App\Question;
+use App\Answer;
 use Illuminate\Http\Request;
 
-class QuestionController extends Controller
+class AnswerController extends Controller
 {
     /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
-    public function index($quiz)
+    public function index()
     {
         //
-    }
-
-    public function answers( Question $question) {
-        return $question->answers->map(function( $answer) {
-            return $answer->only(['id', 'text', 'score', 'correct']);
-        });
     }
 
     /**
@@ -41,26 +35,27 @@ class QuestionController extends Controller
      */
     public function store(Request $request)
     {
-        if(!$request->user()->can('edit-question')) {
+        if(!$request->user()->can('edit-answer')) {
             return response('Geen toegang', 403);
         }
 
         $request->validate([
             'text' => 'required|max:255',
-            'display_order' => 'required|numeric|min:0',
-            'quiz_id' => 'required|numeric'
+            'score' => 'required|numeric|min:0',
+            'correct' => 'required|numeric',
+            'question_id' => 'required|numeric'
         ]);
 
-        Question::create($request->post());
+        Answer::create($request->post());
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  \App\Question  $question
+     * @param  \App\Answer  $answer
      * @return \Illuminate\Http\Response
      */
-    public function show(Question $question)
+    public function show(Answer $answer)
     {
         //
     }
@@ -68,10 +63,10 @@ class QuestionController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Question  $question
+     * @param  \App\Answer  $answer
      * @return \Illuminate\Http\Response
      */
-    public function edit(Question $question)
+    public function edit(Answer $answer)
     {
         //
     }
@@ -80,31 +75,32 @@ class QuestionController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Question  $question
+     * @param  \App\Answer  $answer
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Question $question)
+    public function update(Request $request, Answer $answer)
     {
-        if(!$request->user()->can('edit-question')) {
+        if(!$request->user()->can('edit-answer')) {
             return response('Geen toegang', 403);
         }
 
         $request->validate([
             'text' => 'required|max:255',
-            'display_order' => 'required|numeric|min:0',
-            'quiz_id' => 'required|numeric'
+            'score' => 'required|numeric|min:0',
+            'correct' => 'required|numeric',
+            'question_id' => 'required|numeric'
         ]);
 
-        $question->update($request->post());
+        $answer->update($request->post());
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Question  $question
+     * @param  \App\Answer  $answer
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Question $question)
+    public function destroy(Answer $answer)
     {
         //
     }

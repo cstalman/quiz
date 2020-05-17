@@ -2,11 +2,11 @@
 
 namespace App\Policies;
 
-use App\Question;
+use App\Answer;
 use App\User;
 use Illuminate\Auth\Access\HandlesAuthorization;
 
-class QuestionPolicy
+class AnswerPolicy
 {
     use HandlesAuthorization;
 
@@ -17,12 +17,12 @@ class QuestionPolicy
     }
 
     /**
-     * Determine whether the user can view any models.
+     * Determine whether the user can manage the answers.
      *
      * @param  \App\User  $user
      * @return mixed
      */
-    public function viewAny(User $user)
+    public function manage(User $user)
     {
         return $user->is_admin;
     }
@@ -31,10 +31,10 @@ class QuestionPolicy
      * Determine whether the user can view the model.
      *
      * @param  \App\User  $user
-     * @param  \App\Question  $question
+     * @param  \App\Answer  $answer
      * @return mixed
      */
-    public function manage(User $user, Question $question)
+    public function view(User $user, Answer $answer)
     {
         //
     }
@@ -54,10 +54,10 @@ class QuestionPolicy
      * Determine whether the user can update the model.
      *
      * @param  \App\User  $user
-     * @param  \App\Question  $question
+     * @param  \App\Answer  $answer
      * @return mixed
      */
-    public function update(User $user, Question $question)
+    public function update(User $user, Answer $answer)
     {
         //
     }
@@ -66,10 +66,10 @@ class QuestionPolicy
      * Determine whether the user can delete the model.
      *
      * @param  \App\User  $user
-     * @param  \App\Question  $question
+     * @param  \App\Answer  $answer
      * @return mixed
      */
-    public function delete(User $user, Question $question)
+    public function delete(User $user, Answer $answer)
     {
         //
     }
@@ -78,10 +78,10 @@ class QuestionPolicy
      * Determine whether the user can restore the model.
      *
      * @param  \App\User  $user
-     * @param  \App\Question  $question
+     * @param  \App\Answer  $answer
      * @return mixed
      */
-    public function restore(User $user, Question $question)
+    public function restore(User $user, Answer $answer)
     {
         //
     }
@@ -90,10 +90,10 @@ class QuestionPolicy
      * Determine whether the user can permanently delete the model.
      *
      * @param  \App\User  $user
-     * @param  \App\Question  $question
+     * @param  \App\Answer  $answer
      * @return mixed
      */
-    public function forceDelete(User $user, Question $question)
+    public function forceDelete(User $user, Answer $answer)
     {
         //
     }
