@@ -17,6 +17,8 @@ Auth::routes(['verify' => true]);
 
 Route::get('/', 'HomeController@index')->name('home')->middleware('verified');
 
+Route::get('/quiz-taker/{any?}', 'HomeController@index');
+
 Route::get('/quizzes', 'QuizController@index');
 
 Route::get('/quiz-editor/{any?}', 'AdminController@quiz')

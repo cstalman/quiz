@@ -1,6 +1,6 @@
 <template>
     <div class="container">
-        <h2 class="my-4">Vraag</h2>
+        <h2 class="my-4">Vraag bewerken</h2>
         <form class="question-form" @submit.prevent="save">
             <div class="form-row">
                 <div class="form-group col-md-6">

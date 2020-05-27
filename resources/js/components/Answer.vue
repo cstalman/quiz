@@ -1,6 +1,6 @@
 <template>
     <div class="container">
-        <h2 class="my-4">Antwoord</h2>
+        <h2 class="my-4">Antwoord bewerken</h2>
         <form class="answer-form" @submit.prevent="save">
             <div class="form-row">
                 <div class="form-group col-md-4">
@@ -48,7 +48,6 @@
         data() {
             return {
                 questions: _.cloneDeep(this.initialQuestions), 
-                feedback: '',
                 answer: newAnswer(),
                 errors: []
             };

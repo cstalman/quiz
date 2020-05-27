@@ -29,6 +29,8 @@ class HomeController extends Controller
         if(Auth::user()->is_admin){
             return redirect('/quiz-editor');
         }
+        
+       
         $quizzes = Quiz::orderBy('title')->get();
         return view('home', [
             'quizzes' => $quizzes, 
