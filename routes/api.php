@@ -20,6 +20,7 @@ Route::get('/user', function (Request $request) {
     return $request->user();
 });
 
+//admin
 
 Route::get('/quizzes', 'QuizController@quizzes');
 Route::post('/quizzes/insup', 'QuizController@insup');
@@ -40,3 +41,6 @@ Route::get('/answers/{answer}', function (Answer $answer) {
 });
 Route::post('/answers/add', 'AnswerController@store');
 Route::post('/answers/{answer}', 'AnswerController@update');
+
+// user
+Route::get('/quizzes/{quiz}/qa', 'QuizController@qa');

@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Quiz;
 use App\Carbon;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class QuizController extends Controller
 {
@@ -52,6 +53,19 @@ class QuizController extends Controller
         return $quiz->questions->map(function( $question) {
             return $question->only(['id', 'text', 'display_order']);
         });
+    }
+
+    /**
+     * Show the questions for quiz
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function qa(Quiz $quiz)
+    {
+        return $questions = DB::table('questions')
+        ->select(DB::raw('id, text'))
+        ->where('quiz_id', '=', $quiz->id)
+        ->get();
     }
 
     /**
