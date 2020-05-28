@@ -62,10 +62,31 @@ class QuizController extends Controller
      */
     public function qa(Quiz $quiz)
     {
+        /*$questions = DB::table('questions')
+            ->select(DB::raw('id, text'))
+            ->where('quiz_id', '=', $quiz->id)
+            ->get();
+        
+        foreach($questions as $key => $question) {
+            $questions[$key]['answers'] = DB::table('answers')
+                ->select(DB::raw('id, text'))
+                ->where('question_id', '=', $question->id)
+                ->get();
+        }
+        return $questions;
+
         return $questions = DB::table('questions')
-        ->select(DB::raw('id, text'))
+        ->select(DB::raw('questions.id, questions.text as question, answers.id as answer_id, answers.text as answer'))
+        ->leftJoin('answers', 'questions.id', '=', 'answers.question_id')
         ->where('quiz_id', '=', $quiz->id)
         ->get();
+*/
+        return $questions = $quiz->questions()
+            ->with(['answers' => function ($query) {
+                $query->orderBy('id');
+            }])
+            ->get();
+
     }
 
     /**

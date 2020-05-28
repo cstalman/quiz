@@ -7,7 +7,10 @@
                     <div class="card-header">{{  question.text }}</div>
 
                     <div class="card-body">
-                        <p>{{ question.text }}</p>                     
+                        <p v-for="(answer) in question.answers" :key="answer.id">
+                            <input type="radio" :name="'answer_' + question.id" :value="answer.id" v-model="answer.id">
+                            <label for="answer_id">{{ answer.text }}</label>
+                        </p>                     
                     </div>
                 </div>
             </div>

@@ -2469,6 +2469,9 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: ['initialQuizzes', 'id'],
   data: function data() {
@@ -39935,9 +39938,39 @@ var render = function() {
               _vm._v(_vm._s(question.text))
             ]),
             _vm._v(" "),
-            _c("div", { staticClass: "card-body" }, [
-              _c("p", [_vm._v(_vm._s(question.text))])
-            ])
+            _c(
+              "div",
+              { staticClass: "card-body" },
+              _vm._l(question.answers, function(answer) {
+                return _c("p", { key: answer.id }, [
+                  _c("input", {
+                    directives: [
+                      {
+                        name: "model",
+                        rawName: "v-model",
+                        value: answer.id,
+                        expression: "answer.id"
+                      }
+                    ],
+                    attrs: { type: "radio", name: "answer_" + question.id },
+                    domProps: {
+                      value: answer.id,
+                      checked: _vm._q(answer.id, answer.id)
+                    },
+                    on: {
+                      change: function($event) {
+                        return _vm.$set(answer, "id", answer.id)
+                      }
+                    }
+                  }),
+                  _vm._v(" "),
+                  _c("label", { attrs: { for: "answer_id" } }, [
+                    _vm._v(_vm._s(answer.text))
+                  ])
+                ])
+              }),
+              0
+            )
           ])
         }),
         0

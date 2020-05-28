@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Question;
+use App\Quiz;
 use Illuminate\Http\Request;
 
 class QuestionController extends Controller
@@ -21,6 +22,13 @@ class QuestionController extends Controller
         return $question->answers->map(function( $answer) {
             return $answer->only(['id', 'text', 'score', 'correct']);
         });
+    }
+
+    public function question_answers( Quiz $quiz) {
+        $questions = Question::with('answers')->get();
+        return Question::with(["quiz_id" => function($q){
+            $q->where('user_id', '=', 1);
+        }])->get();
     }
 
     /**
