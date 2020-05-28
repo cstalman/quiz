@@ -8,7 +8,7 @@
 
                     <div class="card-body">
                         <p v-for="(answer) in question.answers" :key="answer.id">
-                            <input type="radio" :name="'answer_' + question.id" :value="answer.id" v-model="answer.id">
+                            <input type="radio" :name="'answer_' + question.id" :value="answer.id" v-model="answer.id" v-on:change="saveAnswer()">
                             <label for="answer_id">{{ answer.text }}</label>
                         </p>                     
                     </div>

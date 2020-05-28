@@ -39958,9 +39958,14 @@ var render = function() {
                       checked: _vm._q(answer.id, answer.id)
                     },
                     on: {
-                      change: function($event) {
-                        return _vm.$set(answer, "id", answer.id)
-                      }
+                      change: [
+                        function($event) {
+                          return _vm.$set(answer, "id", answer.id)
+                        },
+                        function($event) {
+                          return _vm.saveAnswer()
+                        }
+                      ]
                     }
                   }),
                   _vm._v(" "),
