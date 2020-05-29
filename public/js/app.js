@@ -2477,7 +2477,8 @@ __webpack_require__.r(__webpack_exports__);
   data: function data() {
     return {
       quizId: this.initialQuizzes[0].id,
-      questions: []
+      questions: [],
+      answer_id: ''
     };
   },
   created: function created() {
@@ -2489,6 +2490,15 @@ __webpack_require__.r(__webpack_exports__);
 
       axios.get('/api/quizzes/' + this.$route.params.id + '/qa').then(function (res) {
         return _this.questions = res.data;
+      });
+    },
+    saveAnswer: function saveAnswer() {
+      axios.post('/api/questionnaire/insup/', {
+        answer: this.answer_id,
+        question: this.question_id
+      }).then(function (res) {
+        if (res.data.success) {//this.feedback = 'De wijzigingen zijn opgeslagen';
+        }
       });
     }
   }
@@ -39948,19 +39958,19 @@ var render = function() {
                       {
                         name: "model",
                         rawName: "v-model",
-                        value: answer.id,
-                        expression: "answer.id"
+                        value: _vm.answer_id,
+                        expression: "answer_id"
                       }
                     ],
                     attrs: { type: "radio", name: "answer_" + question.id },
                     domProps: {
                       value: answer.id,
-                      checked: _vm._q(answer.id, answer.id)
+                      checked: _vm._q(_vm.answer_id, answer.id)
                     },
                     on: {
                       change: [
                         function($event) {
-                          return _vm.$set(answer, "id", answer.id)
+                          _vm.answer_id = answer.id
                         },
                         function($event) {
                           return _vm.saveAnswer()

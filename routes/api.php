@@ -44,3 +44,7 @@ Route::post('/answers/{answer}', 'AnswerController@update');
 
 // user
 Route::get('/quizzes/{quiz}/qa', 'QuizController@qa');
+
+Route::post('/questionnaire/insup', 'QuestionnaireController@insup');
+
+

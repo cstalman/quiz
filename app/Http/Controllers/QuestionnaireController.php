@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Answer;
 use App\Questionnaire;
 use Illuminate\Http\Request;
 
@@ -15,6 +16,29 @@ class QuestionnaireController extends Controller
     public function index()
     {
         //
+    }
+
+    /**
+     * Store an answer for a user
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+
+    public function insup( Request $request) {
+        $answer = $request->post('answer');
+        
+        $question = Answer::select('question_id')->where('id', '=', $answer)->first();
+        //dd($question);
+        $questionnaire['answer_id'] = $answer;
+        $questionnaire['question_id'] = $question->question_id;
+        $questionnaire['user_id'] = auth()->user()->id;
+
+        Questionnaire::updateOrInsert(
+            ['user_id' => $questionnaire['user_id'], 'question_id' => $questionnaire['question_id']],
+            ['answer_id' => $questionnaire['answer_id']]);
+
+        return ['success' => true];
     }
 
     /**
