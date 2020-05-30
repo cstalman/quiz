@@ -4,8 +4,7 @@
         <div class="row justify-content-center">
             <div class="col-sm-6">
                 <div class="card mt-3" v-for="(question) in questions" :key="question.id">
-                    <div class="card-header">{{  question.text }}</div>
-
+                    <div class="card-header">{{  question.text }} </div>
                     <div class="card-body">
                         <p v-for="(answer) in question.answers" :key="answer.id">
                             <input type="radio" :name="'answer_' + question.id" :value="answer.id" v-model="answer_id" v-on:change="saveAnswer()">
@@ -15,6 +14,7 @@
                 </div>
             </div>
         </div>
+        <div>{{ feedback }}</div>
     </div>
 </template>
 
@@ -26,7 +26,8 @@
             return {
                 quizId: this.initialQuizzes[0].id,
                 questions: [],
-                answer_id: ''
+                answer_id: '',
+                feedback: ''
             }
         },
         created() {
@@ -44,7 +45,8 @@
                 })
                 .then((res) => {
                     if (res.data.success) {
-                        //this.feedback = 'De wijzigingen zijn opgeslagen';
+                        this.feedback = 'De wijzigingen zijn opgeslagen';
+                        setTimeout(() => this.feedback = '', 3000);
                     }     
                 });
             },

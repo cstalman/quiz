@@ -2478,7 +2478,8 @@ __webpack_require__.r(__webpack_exports__);
     return {
       quizId: this.initialQuizzes[0].id,
       questions: [],
-      answer_id: ''
+      answer_id: '',
+      feedback: ''
     };
   },
   created: function created() {
@@ -2493,11 +2494,17 @@ __webpack_require__.r(__webpack_exports__);
       });
     },
     saveAnswer: function saveAnswer() {
+      var _this2 = this;
+
       axios.post('/api/questionnaire/insup/', {
         answer: this.answer_id,
         question: this.question_id
       }).then(function (res) {
-        if (res.data.success) {//this.feedback = 'De wijzigingen zijn opgeslagen';
+        if (res.data.success) {
+          _this2.feedback = 'De wijzigingen zijn opgeslagen';
+          setTimeout(function () {
+            return _this2.feedback = '';
+          }, 3000);
         }
       });
     }
@@ -39945,7 +39952,7 @@ var render = function() {
         _vm._l(_vm.questions, function(question) {
           return _c("div", { key: question.id, staticClass: "card mt-3" }, [
             _c("div", { staticClass: "card-header" }, [
-              _vm._v(_vm._s(question.text))
+              _vm._v(_vm._s(question.text) + " ")
             ]),
             _vm._v(" "),
             _c(
@@ -39990,7 +39997,9 @@ var render = function() {
         }),
         0
       )
-    ])
+    ]),
+    _vm._v(" "),
+    _c("div", [_vm._v(_vm._s(_vm.feedback))])
   ])
 }
 var staticRenderFns = []
