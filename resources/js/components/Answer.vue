@@ -20,7 +20,7 @@
                 </div>
                 <div class="form-group col-md-1">
                     <label for="answer_correct">Correct</label>
-                    <input type="checkbox" class="form-control" id="answer_correct" v-model="answer.correct">
+                    <input type="checkbox" class="form-control" id="answer_correct" value=1 v-model="answer.correct">
                 </div>
                 
             </div>      
@@ -70,7 +70,7 @@
                 }
                 axios.post(url, this.answer)
                     .then(res => {
-                        this.$router.push('/');
+                        this.$router.push('/answers');
                     })
                     .catch(error => {
                         let messages = Object.values(error.response.data.errors);

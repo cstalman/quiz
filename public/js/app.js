@@ -1984,7 +1984,7 @@ function newAnswer() {
       }
 
       axios.post(url, this.answer).then(function (res) {
-        _this2.$router.push('/');
+        _this2.$router.push('/answers');
       })["catch"](function (error) {
         var messages = Object.values(error.response.data.errors);
         _this2.errors = [].concat.apply([], messages);
@@ -39142,10 +39142,10 @@ var render = function() {
                 }
               ],
               staticClass: "form-control",
-              attrs: { type: "checkbox", id: "answer_correct" },
+              attrs: { type: "checkbox", id: "answer_correct", value: "1" },
               domProps: {
                 checked: Array.isArray(_vm.answer.correct)
-                  ? _vm._i(_vm.answer.correct, null) > -1
+                  ? _vm._i(_vm.answer.correct, "1") > -1
                   : _vm.answer.correct
               },
               on: {
@@ -39154,7 +39154,7 @@ var render = function() {
                     $$el = $event.target,
                     $$c = $$el.checked ? true : false
                   if (Array.isArray($$a)) {
-                    var $$v = null,
+                    var $$v = "1",
                       $$i = _vm._i($$a, $$v)
                     if ($$el.checked) {
                       $$i < 0 &&

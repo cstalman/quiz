@@ -42,9 +42,13 @@ class AnswerController extends Controller
         $request->validate([
             'text' => 'required|max:255',
             'score' => 'required|numeric|min:0',
-            'correct' => 'required|numeric',
+            'correct' => 'boolean|nullable',
             'question_id' => 'required|numeric'
         ]);
+
+        if($request->get('correct') == null){
+            $status = 0;
+        }
 
         Answer::create($request->post());
     }
@@ -87,9 +91,13 @@ class AnswerController extends Controller
         $request->validate([
             'text' => 'required|max:255',
             'score' => 'required|numeric|min:0',
-            'correct' => 'required|numeric',
+            'correct' => 'boolean|nullable',
             'question_id' => 'required|numeric'
         ]);
+
+        if($request->get('correct') == null){
+            $status = 0;
+        }
 
         $answer->update($request->post());
     }
