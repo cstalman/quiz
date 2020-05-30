@@ -65,7 +65,7 @@
                 }
                 axios.post(url, this.question)
                     .then(res => {
-                        this.$router.push('/');
+                        this.$router.push('/questions');
                     })
                     .catch(error => {
                         let messages = Object.values(error.response.data.errors);

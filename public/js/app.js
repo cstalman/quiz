@@ -2200,7 +2200,7 @@ function newQuestion() {
       }
 
       axios.post(url, this.question).then(function (res) {
-        _this2.$router.push('/');
+        _this2.$router.push('/questions');
       })["catch"](function (error) {
         var messages = Object.values(error.response.data.errors);
         _this2.errors = [].concat.apply([], messages);

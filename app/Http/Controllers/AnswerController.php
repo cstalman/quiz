@@ -47,7 +47,7 @@ class AnswerController extends Controller
         ]);
 
         if($request->get('correct') == null){
-            $status = 0;
+            $correct = 0;
         }
 
         Answer::create($request->post());
@@ -96,7 +96,7 @@ class AnswerController extends Controller
         ]);
 
         if($request->get('correct') == null){
-            $status = 0;
+            $correct = 0;
         }
 
         $answer->update($request->post());
