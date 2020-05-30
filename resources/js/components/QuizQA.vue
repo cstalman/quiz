@@ -26,7 +26,7 @@
             return {
                 quizId: this.initialQuizzes[0].id,
                 questions: [],
-                answer_id: '',
+                answers : [],
                 feedback: ''
             }
         },
@@ -45,8 +45,7 @@
                 })
                 .then((res) => {
                     if (res.data.success) {
-                        this.feedback = 'De wijzigingen zijn opgeslagen';
-                        setTimeout(() => this.feedback = '', 3000);
+                        //this.feedback = 'De wijzigingen zijn opgeslagen';
                     }     
                 });
             },

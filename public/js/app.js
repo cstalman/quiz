@@ -2478,7 +2478,7 @@ __webpack_require__.r(__webpack_exports__);
     return {
       quizId: this.initialQuizzes[0].id,
       questions: [],
-      answer_id: '',
+      answers: [],
       feedback: ''
     };
   },
@@ -2494,17 +2494,11 @@ __webpack_require__.r(__webpack_exports__);
       });
     },
     saveAnswer: function saveAnswer() {
-      var _this2 = this;
-
       axios.post('/api/questionnaire/insup/', {
         answer: this.answer_id,
         question: this.question_id
       }).then(function (res) {
-        if (res.data.success) {
-          _this2.feedback = 'De wijzigingen zijn opgeslagen';
-          setTimeout(function () {
-            return _this2.feedback = '';
-          }, 3000);
+        if (res.data.success) {//this.feedback = 'De wijzigingen zijn opgeslagen';
         }
       });
     }

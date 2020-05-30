@@ -26,10 +26,12 @@ class QuestionnaireController extends Controller
      */
 
     public function insup( Request $request) {
+        //dd($request);
+        
         $answer = $request->post('answer');
         
         $question = Answer::select('question_id')->where('id', '=', $answer)->first();
-        //dd($question);
+        
         $questionnaire['answer_id'] = $answer;
         $questionnaire['question_id'] = $question->question_id;
         $questionnaire['user_id'] = auth()->user()->id;
