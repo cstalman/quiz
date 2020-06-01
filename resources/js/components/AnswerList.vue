@@ -13,10 +13,13 @@
                 <option v-for="question in questions" :value="question.id" :key="question.id">{{question.text}}</option>
             </select>
             <ul class="list-group mt-3">
-                <li v-for="answer in answers" :key="answer.id" class="list-group-item">
+                <li v-for="(answer, index) in answers" :key="answer.id" class="list-group-item">
                     <router-link :to="{name: 'edit-answer', params: {id: answer.id, question: questionId}}">
                         {{answer.text}}
                     </router-link>
+                    <div class="float-right">
+                        <a @click="removeAnswer(index)" class="btn btn-primary d-inline-block mb-2 ml-2 text-white"><i class="fa fa-times-circle"></i> Verwijderen</a>
+                    </div>
                 </li>
                 <div class="alert alert-primary" v-if="answers.length === 0">Geen antwoorden gevonden</div>
             </ul>
@@ -55,7 +58,16 @@
             fetchAnswers() {
                 axios.get(`/api/questions/${this.questionId}/answers`)
                     .then(res => this.answers = res.data);
-            }
+            },
+            removeAnswer(index) {
+               if (confirm('Weet je het zeker?')) {
+                   let id = this.answers[index].id
+                   if (id > 0) {
+                       axios.delete('/api/answers/' + id);
+                   }
+                   this.answers.splice(index, 1);
+               }
+            },
         }
     }
 </script>

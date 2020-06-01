@@ -36,6 +36,7 @@
                 quizId: this.initialQuizzes[0].id,
                 questions: [],
                 answers : [],
+                answer_id: '',
                 feedback: ''
             }
         },

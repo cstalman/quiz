@@ -2062,6 +2062,9 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: ['initialQuizzes', 'initialQuestions'],
   data: function data() {
@@ -2100,6 +2103,17 @@ __webpack_require__.r(__webpack_exports__);
       axios.get("/api/questions/".concat(this.questionId, "/answers")).then(function (res) {
         return _this3.answers = res.data;
       });
+    },
+    removeAnswer: function removeAnswer(index) {
+      if (confirm('Weet je het zeker?')) {
+        var id = this.answers[index].id;
+
+        if (id > 0) {
+          axios["delete"]('/api/answers/' + id);
+        }
+
+        this.answers.splice(index, 1);
+      }
     }
   }
 });
@@ -2580,6 +2594,7 @@ __webpack_require__.r(__webpack_exports__);
       quizId: this.initialQuizzes[0].id,
       questions: [],
       answers: [],
+      answer_id: '',
       feedback: ''
     };
   },
@@ -39564,7 +39579,7 @@ var render = function() {
         "ul",
         { staticClass: "list-group mt-3" },
         [
-          _vm._l(_vm.answers, function(answer) {
+          _vm._l(_vm.answers, function(answer, index) {
             return _c(
               "li",
               { key: answer.id, staticClass: "list-group-item" },
@@ -39586,7 +39601,26 @@ var render = function() {
                         "\n                "
                     )
                   ]
-                )
+                ),
+                _vm._v(" "),
+                _c("div", { staticClass: "float-right" }, [
+                  _c(
+                    "a",
+                    {
+                      staticClass:
+                        "btn btn-primary d-inline-block mb-2 ml-2 text-white",
+                      on: {
+                        click: function($event) {
+                          return _vm.removeAnswer(index)
+                        }
+                      }
+                    },
+                    [
+                      _c("i", { staticClass: "fa fa-times-circle" }),
+                      _vm._v(" Verwijderen")
+                    ]
+                  )
+                ])
               ],
               1
             )

@@ -110,6 +110,8 @@ class AnswerController extends Controller
      */
     public function destroy(Answer $answer)
     {
-        //
+        $this->authorize('delete', $answer);
+        $answer->delete();
+        return ['success' => true];
     }
 }

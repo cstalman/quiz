@@ -46,6 +46,7 @@ Route::get('/answers/{answer}', function (Answer $answer) {
 });
 Route::post('/answers/add', 'AnswerController@store');
 Route::post('/answers/{answer}', 'AnswerController@update');
+Route::delete('/answers/{answer}', 'AnswerController@destroy');
 
 // user routes
 
