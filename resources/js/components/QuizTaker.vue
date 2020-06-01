@@ -11,6 +11,7 @@
     import VueRouter from 'vue-router';
     import QuizList from './QuizList.vue';
     import QuizQA from './QuizQA.vue';
+    import QuizResult from './QuizResult.vue';
 
     export default {
         props: ['quizzes', 'questions'],       
@@ -27,6 +28,12 @@
                     path: '/quiz/:id',
                     name: 'quiz-qa',
                     component: QuizQA,
+                    props: true
+                },
+                {
+                    path: '/quiz-result/:id',
+                    name: 'quiz-result',
+                    component: QuizResult,
                     props: true
                 },
                 {

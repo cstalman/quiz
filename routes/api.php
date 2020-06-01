@@ -2,6 +2,7 @@
 
 use App\Answer;
 use App\Question;
+use App\Quiz;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -45,6 +46,15 @@ Route::post('/answers/{answer}', 'AnswerController@update');
 // user
 Route::get('/quizzes/{quiz}/qa', 'QuizController@qa');
 
+Route::get('/quizzes/{quiz}', function (Quiz $quiz) {
+    return $quiz;
+});
+
+Route::get('/questions/{quiz}/count', 'QuestionController@count');
+
 Route::post('/questionnaire/insup', 'QuestionnaireController@insup');
 
+Route::get('/questionnaires/{quiz}/correct', 'QuestionnaireController@correct');
+
+Route::get('/questionnaires/result', 'QuizController@quizzesDone');
 

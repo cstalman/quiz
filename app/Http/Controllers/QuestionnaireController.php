@@ -3,7 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Answer;
+use App\Question;
 use App\Questionnaire;
+use App\Quiz;
 use Illuminate\Http\Request;
 
 class QuestionnaireController extends Controller
@@ -44,14 +46,26 @@ class QuestionnaireController extends Controller
     }
 
     /**
-     * Show the form for creating a new resource.
+     * Get the number of correct responses
      *
+     * @param  \App\Quiz $quiz
      * @return \Illuminate\Http\Response
+     * 
      */
-    public function create()
+    public function correct(Quiz $quiz)
     {
-        //
+        $user_id = auth()->user()->id;
+
+        return Question::join('answers', 'questions.id', '=', 'answers.question_id')
+            ->leftJoin('questionnaires', 'answers.id', '=', 'questionnaires.answer_id')
+            ->where([
+                ['answers.correct', '1'],
+                ['user_id', $user_id], 
+                ['quiz_id', $quiz->id]
+            ])
+            ->count();
     }
+
 
     /**
      * Store a newly created resource in storage.

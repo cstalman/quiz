@@ -100,6 +100,29 @@ class QuizController extends Controller
         return Quiz::orderBy('title')->get();
     }
 
+        /**
+     * Get the quizzes and if they're completed
+     *
+     * @return \Illuminate\Http\Response
+     * 
+     */
+    public function quizzesDone()
+    {
+        $user_id = auth()->user()->id;
+        DB::enableQueryLog();
+
+        $quizzesDone = Quiz::join('questions', 'quizzes.id', '=', 'questions.quiz_id')
+            ->leftJoin('questionnaires', function($join) use ($user_id) {
+                $join->on('questionnaires.question_id', 'questions.id');
+                $join->on('user_id', DB::raw("'".$user_id."'"));
+            })
+            ->groupBy('quizzes.id')
+            ->selectRaw('quizzes.id, IF(COUNT(questions.id)=COUNT(DISTINCT questionnaires.question_id), TRUE, FALSE) as test') 
+            ->get();
+        
+        return $quizzesDone;
+    }
+
     /**
      * Store a newly created resource in storage.
      *

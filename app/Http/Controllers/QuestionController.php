@@ -32,13 +32,14 @@ class QuestionController extends Controller
     }
 
     /**
-     * Show the form for creating a new resource.
+     * Get the number of questions for a quiz
      *
+     * @param  \App\Quiz $quiz
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function count(Quiz $quiz)
     {
-        //
+        return Question::where('quiz_id', $quiz->id)->count();
     }
 
     /**
