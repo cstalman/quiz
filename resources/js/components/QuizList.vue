@@ -12,7 +12,7 @@
                             <button class="btn btn-primary d-inline-block mb-2 ml-2 text-white remove"><i class="fa fa-edit"></i> Toets maken</button>
                         </router-link>
                         <router-link v-if="quizzesDone[index].test == '1'" :to="{name: 'quiz-result', params: {id: quiz.id}}">
-                            <button class="btn btn-primary d-inline-block mb-2 ml-2 text-white remove"><i class="fa fa-check-square"></i> Toets resultaten</button>
+                            <button class="btn btn-primary d-inline-block mb-2 ml-2 text-white remove"><i class="fa fa-check-square"></i> Resultaten toets</button>
                         </router-link>
                         
                     </div>

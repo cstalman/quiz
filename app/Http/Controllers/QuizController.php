@@ -109,7 +109,6 @@ class QuizController extends Controller
     public function quizzesDone()
     {
         $user_id = auth()->user()->id;
-        DB::enableQueryLog();
 
         $quizzesDone = Quiz::join('questions', 'quizzes.id', '=', 'questions.quiz_id')
             ->leftJoin('questionnaires', function($join) use ($user_id) {

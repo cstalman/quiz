@@ -40142,7 +40142,7 @@ var render = function() {
                           },
                           [
                             _c("i", { staticClass: "fa fa-check-square" }),
-                            _vm._v(" Toets resultaten")
+                            _vm._v(" Resultaten toets")
                           ]
                         )
                       ]
