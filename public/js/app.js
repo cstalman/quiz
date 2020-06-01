@@ -2472,6 +2472,15 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: ['initialQuizzes', 'id'],
   data: function data() {
@@ -2494,11 +2503,14 @@ __webpack_require__.r(__webpack_exports__);
       });
     },
     saveAnswer: function saveAnswer() {
+      var _this2 = this;
+
       axios.post('/api/questionnaire/insup/', {
         answer: this.answer_id,
         question: this.question_id
       }).then(function (res) {
-        if (res.data.success) {//this.feedback = 'De wijzigingen zijn opgeslagen';
+        if (res.data.success) {
+          _this2.feedback = 'De wijzigingen zijn opgeslagen';
         }
       });
     }
@@ -39993,7 +40005,34 @@ var render = function() {
       )
     ]),
     _vm._v(" "),
-    _c("div", [_vm._v(_vm._s(_vm.feedback))])
+    _c("div", { staticClass: "row justify-content-center" }, [
+      _c("div", { staticClass: "col-sm-6" }, [
+        _c("div", { staticClass: "my-4" }, [
+          _vm._v(_vm._s(_vm.feedback) + " ")
+        ]),
+        _vm._v(" "),
+        _c(
+          "div",
+          { staticClass: "mb-4" },
+          [
+            _c("router-link", { attrs: { to: { name: "quizzes" } } }, [
+              _c(
+                "a",
+                {
+                  staticClass:
+                    "btn btn-primary d-inline-block mb-2 ml-2 text-white remove"
+                },
+                [
+                  _c("i", { staticClass: "fa fa-bars" }),
+                  _vm._v(" Terug naar toetsen")
+                ]
+              )
+            ])
+          ],
+          1
+        )
+      ])
+    ])
   ])
 }
 var staticRenderFns = []

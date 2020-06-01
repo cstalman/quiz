@@ -14,7 +14,16 @@
                 </div>
             </div>
         </div>
-        <div>{{ feedback }}</div>
+        <div class="row justify-content-center">
+            <div class="col-sm-6">
+                <div class="my-4">{{ feedback }} </div>
+                <div class="mb-4">
+                    <router-link :to="{name: 'quizzes'}">
+                        <a class="btn btn-primary d-inline-block mb-2 ml-2 text-white remove"><i class="fa fa-bars"></i> Terug naar toetsen</a>
+                    </router-link>
+                </div>
+            </div>
+        </div>
     </div>
 </template>
 
@@ -45,7 +54,7 @@
                 })
                 .then((res) => {
                     if (res.data.success) {
-                        //this.feedback = 'De wijzigingen zijn opgeslagen';
+                        this.feedback = 'De wijzigingen zijn opgeslagen';
                     }     
                 });
             },
