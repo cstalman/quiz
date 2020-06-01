@@ -115,6 +115,9 @@ class QuestionController extends Controller
      */
     public function destroy(Question $question)
     {
-        //
+        $this->authorize('delete', $question);
+        $question->delete();
+        return ['success' => true];
     }
+
 }

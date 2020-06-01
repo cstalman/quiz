@@ -7,12 +7,16 @@
                 <option value="">Kies een toets</option>
                 <option v-for="quiz in quizzes" :value="quiz.id" :key="quiz.id">{{quiz.title}}</option>
             </select>
-            <div>{{ feedback }}</div>
             <ul class="list-group mt-3">
-                <li v-for="question in questions" :key="question.id" class="list-group-item">
-                    <router-link :to="{name: 'edit-question', params: {id: question.id}}">
-                        {{question.text}}
-                    </router-link>
+                <li v-for="(question, index) in questions" :key="question.id" class="list-group-item">
+                     <div class="float-left">
+                         <router-link :to="{name: 'edit-question', params: {id: question.id}}">
+                            {{question.text}}
+                        </router-link>
+                     </div>
+                     <div class="float-right">
+                        <a @click="removeQuestion(index)" class="btn btn-primary d-inline-block mb-2 ml-2 text-white"><i class="fa fa-times-circle"></i> Verwijderen</a>
+                    </div>
                 </li>
             </ul>
         </div>
@@ -26,6 +30,7 @@
         data() {
             return {
                 quizId: this.initialQuizzes[0].id,
+                quizzes: [],
                 questions: []
             }
         },
@@ -41,7 +46,16 @@
             fetchQuestions() {
                 axios.get(`/api/quizzes/${this.quizId}/questions`)
                     .then(res => this.questions = res.data);
-            }
+            },
+            removeQuestion(index) {
+               if (confirm('Weet je het zeker?')) {
+                   let id = this.questions[index].id
+                   if (id > 0) {
+                       axios.delete('/api/questions/' + id);
+                   }
+                   this.questions.splice(index, 1);
+               }
+            },
         }
     }
 </script>

@@ -1942,6 +1942,16 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 function newAnswer() {
   return {
     question_id: '',
@@ -1952,16 +1962,23 @@ function newAnswer() {
 }
 
 /* harmony default export */ __webpack_exports__["default"] = ({
-  props: ['initial-questions', 'id'],
+  props: ['initialQuizzes', 'initialQuestions', 'id'],
   data: function data() {
     return {
-      questions: _.cloneDeep(this.initialQuestions),
       answer: newAnswer(),
-      errors: []
+      errors: [],
+      quizId: '',
+      questionId: this.initialQuestions[0].id,
+      quizzes: [],
+      questions: [],
+      answers: []
     };
   },
   created: function created() {
     var _this = this;
+
+    this.fetchQuizzes();
+    this.fetchQuestions();
 
     if (this.id) {
       axios.get('/api/answers/' + this.id).then(function (res) {
@@ -1974,8 +1991,22 @@ function newAnswer() {
     next();
   },
   methods: {
-    save: function save() {
+    fetchQuizzes: function fetchQuizzes() {
       var _this2 = this;
+
+      axios.get('/api/quizzes').then(function (res) {
+        return _this2.quizzes = res.data;
+      });
+    },
+    fetchQuestions: function fetchQuestions() {
+      var _this3 = this;
+
+      axios.get("/api/quizzes/".concat(this.quizId, "/questions")).then(function (res) {
+        return _this3.questions = res.data;
+      });
+    },
+    save: function save() {
+      var _this4 = this;
 
       var url = '/api/answers/add';
 
@@ -1984,10 +2015,10 @@ function newAnswer() {
       }
 
       axios.post(url, this.answer).then(function (res) {
-        _this2.$router.push('/answers');
+        _this4.$router.push('/answers');
       })["catch"](function (error) {
         var messages = Object.values(error.response.data.errors);
-        _this2.errors = [].concat.apply([], messages);
+        _this4.errors = [].concat.apply([], messages);
       });
     }
   }
@@ -2025,31 +2056,49 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
-  props: ['initialQuestions'],
+  props: ['initialQuizzes', 'initialQuestions'],
   data: function data() {
     return {
+      quizId: this.initialQuizzes[0].id,
       questionId: this.initialQuestions[0].id,
+      quizzes: [],
+      questions: [],
       answers: []
     };
   },
   created: function created() {
+    this.fetchQuizzes();
     this.fetchQuestions();
     this.fetchAnswers();
   },
   methods: {
-    fetchQuestions: function fetchQuestions() {
+    fetchQuizzes: function fetchQuizzes() {
       var _this = this;
 
-      axios.get("/api/quizzes/".concat(this.questionId, "/questions")).then(function (res) {
-        return _this.questions = res.data;
+      axios.get('/api/quizzes').then(function (res) {
+        return _this.quizzes = res.data;
+      });
+    },
+    fetchQuestions: function fetchQuestions() {
+      var _this2 = this;
+
+      this.answers = [];
+      axios.get("/api/quizzes/".concat(this.quizId, "/questions")).then(function (res) {
+        return _this2.questions = res.data;
       });
     },
     fetchAnswers: function fetchAnswers() {
-      var _this2 = this;
+      var _this3 = this;
 
       axios.get("/api/questions/".concat(this.questionId, "/answers")).then(function (res) {
-        return _this2.answers = res.data;
+        return _this3.answers = res.data;
       });
     }
   }
@@ -2088,11 +2137,16 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: ['initialQuizzes'],
   data: function data() {
     return {
       quizId: this.initialQuizzes[0].id,
+      quizzes: [],
       questions: []
     };
   },
@@ -2114,6 +2168,17 @@ __webpack_require__.r(__webpack_exports__);
       axios.get("/api/quizzes/".concat(this.quizId, "/questions")).then(function (res) {
         return _this2.questions = res.data;
       });
+    },
+    removeQuestion: function removeQuestion(index) {
+      if (confirm('Weet je het zeker?')) {
+        var id = this.questions[index].id;
+
+        if (id > 0) {
+          axios["delete"]('/api/questions/' + id);
+        }
+
+        this.questions.splice(index, 1);
+      }
     }
   }
 });
@@ -2158,6 +2223,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
 function newQuestion() {
   return {
     quiz_id: '',
@@ -2171,6 +2237,7 @@ function newQuestion() {
   data: function data() {
     return {
       questions: _.cloneDeep(this.initialQuestions),
+      quizzes: _.cloneDeep(this.initialQuizzes),
       feedback: '',
       question: newQuestion(),
       errors: []
@@ -2178,6 +2245,8 @@ function newQuestion() {
   },
   created: function created() {
     var _this = this;
+
+    this.fetchQuizzes();
 
     if (this.id) {
       axios.get('/api/questions/' + this.id).then(function (res) {
@@ -2190,8 +2259,15 @@ function newQuestion() {
     next();
   },
   methods: {
-    save: function save() {
+    fetchQuizzes: function fetchQuizzes() {
       var _this2 = this;
+
+      axios.get('/api/quizzes').then(function (res) {
+        return _this2.quizzes = res.data;
+      });
+    },
+    save: function save() {
+      var _this3 = this;
 
       var url = '/api/questions/add';
 
@@ -2200,10 +2276,10 @@ function newQuestion() {
       }
 
       axios.post(url, this.question).then(function (res) {
-        _this2.$router.push('/questions');
+        _this3.$router.push('/questions');
       })["catch"](function (error) {
         var messages = Object.values(error.response.data.errors);
-        _this2.errors = [].concat.apply([], messages);
+        _this3.errors = [].concat.apply([], messages);
       });
     }
   }
@@ -39124,58 +39200,110 @@ var render = function() {
       },
       [
         _c("div", { staticClass: "form-row" }, [
-          _c("div", { staticClass: "form-group col-md-4" }, [
-            _c("label", { attrs: { for: "question" } }, [_vm._v("Vraag")]),
-            _vm._v(" "),
-            _c(
-              "select",
-              {
-                directives: [
-                  {
-                    name: "model",
-                    rawName: "v-model",
-                    value: _vm.answer.question_id,
-                    expression: "answer.question_id"
-                  }
-                ],
-                staticClass: "form-control",
-                attrs: { id: "question", required: "" },
-                on: {
-                  change: function($event) {
-                    var $$selectedVal = Array.prototype.filter
-                      .call($event.target.options, function(o) {
-                        return o.selected
-                      })
-                      .map(function(o) {
-                        var val = "_value" in o ? o._value : o.value
-                        return val
-                      })
-                    _vm.$set(
-                      _vm.answer,
-                      "question_id",
-                      $event.target.multiple ? $$selectedVal : $$selectedVal[0]
-                    )
-                  }
-                }
-              },
-              [
-                _c("option", { attrs: { value: "" } }, [
-                  _vm._v("Kies een vraag")
-                ]),
+          this.id
+            ? _c("div")
+            : _c("div", { staticClass: "form-group col-md-2" }, [
+                _c("label", { attrs: { for: "quiz" } }, [_vm._v("Toets")]),
                 _vm._v(" "),
-                _vm._l(_vm.questions, function(question) {
-                  return _c(
-                    "option",
-                    { key: question.id, domProps: { value: question.id } },
-                    [_vm._v(_vm._s(question.text))]
-                  )
-                })
-              ],
-              2
-            )
-          ]),
+                _c(
+                  "select",
+                  {
+                    directives: [
+                      {
+                        name: "model",
+                        rawName: "v-model",
+                        value: _vm.quizId,
+                        expression: "quizId"
+                      }
+                    ],
+                    staticClass: "form-control",
+                    attrs: { id: "quiz", required: "" },
+                    on: {
+                      change: [
+                        function($event) {
+                          var $$selectedVal = Array.prototype.filter
+                            .call($event.target.options, function(o) {
+                              return o.selected
+                            })
+                            .map(function(o) {
+                              var val = "_value" in o ? o._value : o.value
+                              return val
+                            })
+                          _vm.quizId = $event.target.multiple
+                            ? $$selectedVal
+                            : $$selectedVal[0]
+                        },
+                        _vm.fetchQuestions
+                      ]
+                    }
+                  },
+                  _vm._l(_vm.quizzes, function(quiz) {
+                    return _c(
+                      "option",
+                      { key: quiz.id, domProps: { value: quiz.id } },
+                      [_vm._v(_vm._s(quiz.title))]
+                    )
+                  }),
+                  0
+                )
+              ]),
           _vm._v(" "),
-          _c("div", { staticClass: "form-group col-md-6" }, [
+          this.id
+            ? _c("div")
+            : _c("div", { staticClass: "form-group col-md-3" }, [
+                _c("label", { attrs: { for: "question" } }, [_vm._v("Vraag")]),
+                _vm._v(" "),
+                _c(
+                  "select",
+                  {
+                    directives: [
+                      {
+                        name: "model",
+                        rawName: "v-model",
+                        value: _vm.answer.question_id,
+                        expression: "answer.question_id"
+                      }
+                    ],
+                    staticClass: "form-control",
+                    attrs: { id: "question", required: "" },
+                    on: {
+                      change: function($event) {
+                        var $$selectedVal = Array.prototype.filter
+                          .call($event.target.options, function(o) {
+                            return o.selected
+                          })
+                          .map(function(o) {
+                            var val = "_value" in o ? o._value : o.value
+                            return val
+                          })
+                        _vm.$set(
+                          _vm.answer,
+                          "question_id",
+                          $event.target.multiple
+                            ? $$selectedVal
+                            : $$selectedVal[0]
+                        )
+                      }
+                    }
+                  },
+                  [
+                    _c("option", { attrs: { value: "" } }, [
+                      _vm._v("Kies een vraag")
+                    ]),
+                    _vm._v(" "),
+                    _vm._l(_vm.questions, function(question) {
+                      return _c(
+                        "option",
+                        { key: question.id, domProps: { value: question.id } },
+                        [_vm._v(_vm._s(question.text))]
+                      )
+                    })
+                  ],
+                  2
+                )
+              ]),
+          _vm._v(" "),
+          _c("div", { staticClass: "form-group col-md-5" }, [
             _c("label", { attrs: { for: "answer_text" } }, [
               _vm._v("Antwoord")
             ]),
@@ -39336,6 +39464,54 @@ var render = function() {
     _c("h2", { staticClass: "my-4" }, [_vm._v("Beheer antwoorden")]),
     _vm._v(" "),
     _c("div", { staticClass: "answer-list" }, [
+      _c("label", { attrs: { for: "quiz" } }, [_vm._v("Kies een toets")]),
+      _vm._v(" "),
+      _c(
+        "select",
+        {
+          directives: [
+            {
+              name: "model",
+              rawName: "v-model",
+              value: _vm.quizId,
+              expression: "quizId"
+            }
+          ],
+          staticClass: "form-control",
+          attrs: { id: "quiz", required: "" },
+          on: {
+            change: [
+              function($event) {
+                var $$selectedVal = Array.prototype.filter
+                  .call($event.target.options, function(o) {
+                    return o.selected
+                  })
+                  .map(function(o) {
+                    var val = "_value" in o ? o._value : o.value
+                    return val
+                  })
+                _vm.quizId = $event.target.multiple
+                  ? $$selectedVal
+                  : $$selectedVal[0]
+              },
+              _vm.fetchQuestions
+            ]
+          }
+        },
+        [
+          _c("option", { attrs: { value: "" } }, [_vm._v("Kies een toets")]),
+          _vm._v(" "),
+          _vm._l(_vm.quizzes, function(quiz) {
+            return _c(
+              "option",
+              { key: quiz.id, domProps: { value: quiz.id } },
+              [_vm._v(_vm._s(quiz.title))]
+            )
+          })
+        ],
+        2
+      ),
+      _vm._v(" "),
       _c("label", { attrs: { for: "question" } }, [_vm._v("Vraag")]),
       _vm._v(" "),
       _c(
@@ -39373,7 +39549,7 @@ var render = function() {
         [
           _c("option", { attrs: { value: "" } }, [_vm._v("Kies een vraag")]),
           _vm._v(" "),
-          _vm._l(_vm.initialQuestions, function(question) {
+          _vm._l(_vm.questions, function(question) {
             return _c(
               "option",
               { key: question.id, domProps: { value: question.id } },
@@ -39387,31 +39563,42 @@ var render = function() {
       _c(
         "ul",
         { staticClass: "list-group mt-3" },
-        _vm._l(_vm.answers, function(answer) {
-          return _c(
-            "li",
-            { key: answer.id, staticClass: "list-group-item" },
-            [
-              _c(
-                "router-link",
-                {
-                  attrs: {
-                    to: { name: "edit-answer", params: { id: answer.id } }
-                  }
-                },
-                [
-                  _vm._v(
-                    "\n                    " +
-                      _vm._s(answer.text) +
-                      "\n                "
-                  )
-                ]
-              )
-            ],
-            1
-          )
-        }),
-        0
+        [
+          _vm._l(_vm.answers, function(answer) {
+            return _c(
+              "li",
+              { key: answer.id, staticClass: "list-group-item" },
+              [
+                _c(
+                  "router-link",
+                  {
+                    attrs: {
+                      to: {
+                        name: "edit-answer",
+                        params: { id: answer.id, question: _vm.questionId }
+                      }
+                    }
+                  },
+                  [
+                    _vm._v(
+                      "\n                    " +
+                        _vm._s(answer.text) +
+                        "\n                "
+                    )
+                  ]
+                )
+              ],
+              1
+            )
+          }),
+          _vm._v(" "),
+          _vm.answers.length === 0
+            ? _c("div", { staticClass: "alert alert-primary" }, [
+                _vm._v("Geen antwoorden gevonden")
+              ])
+            : _vm._e()
+        ],
+        2
       )
     ])
   ])
@@ -39490,33 +39677,59 @@ var render = function() {
         2
       ),
       _vm._v(" "),
-      _c("div", [_vm._v(_vm._s(_vm.feedback))]),
-      _vm._v(" "),
       _c(
         "ul",
         { staticClass: "list-group mt-3" },
-        _vm._l(_vm.questions, function(question) {
+        _vm._l(_vm.questions, function(question, index) {
           return _c(
             "li",
             { key: question.id, staticClass: "list-group-item" },
             [
               _c(
-                "router-link",
-                {
-                  attrs: {
-                    to: { name: "edit-question", params: { id: question.id } }
-                  }
-                },
+                "div",
+                { staticClass: "float-left" },
                 [
-                  _vm._v(
-                    "\n                    " +
-                      _vm._s(question.text) +
-                      "\n                "
+                  _c(
+                    "router-link",
+                    {
+                      attrs: {
+                        to: {
+                          name: "edit-question",
+                          params: { id: question.id }
+                        }
+                      }
+                    },
+                    [
+                      _vm._v(
+                        "\n                        " +
+                          _vm._s(question.text) +
+                          "\n                    "
+                      )
+                    ]
                   )
-                ]
-              )
-            ],
-            1
+                ],
+                1
+              ),
+              _vm._v(" "),
+              _c("div", { staticClass: "float-right" }, [
+                _c(
+                  "a",
+                  {
+                    staticClass:
+                      "btn btn-primary d-inline-block mb-2 ml-2 text-white",
+                    on: {
+                      click: function($event) {
+                        return _vm.removeQuestion(index)
+                      }
+                    }
+                  },
+                  [
+                    _c("i", { staticClass: "fa fa-times-circle" }),
+                    _vm._v(" Verwijderen")
+                  ]
+                )
+              ])
+            ]
           )
         }),
         0
@@ -39562,6 +39775,57 @@ var render = function() {
       },
       [
         _c("div", { staticClass: "form-row" }, [
+          _c("div", { staticClass: "form-group col-md-4" }, [
+            _c("label", { attrs: { for: "quiz" } }, [_vm._v("Toets")]),
+            _vm._v(" "),
+            _c(
+              "select",
+              {
+                directives: [
+                  {
+                    name: "model",
+                    rawName: "v-model",
+                    value: _vm.question.quiz_id,
+                    expression: "question.quiz_id"
+                  }
+                ],
+                staticClass: "form-control",
+                attrs: { id: "quiz", required: "" },
+                on: {
+                  change: function($event) {
+                    var $$selectedVal = Array.prototype.filter
+                      .call($event.target.options, function(o) {
+                        return o.selected
+                      })
+                      .map(function(o) {
+                        var val = "_value" in o ? o._value : o.value
+                        return val
+                      })
+                    _vm.$set(
+                      _vm.question,
+                      "quiz_id",
+                      $event.target.multiple ? $$selectedVal : $$selectedVal[0]
+                    )
+                  }
+                }
+              },
+              [
+                _c("option", { attrs: { value: "" } }, [
+                  _vm._v("Kies een toets")
+                ]),
+                _vm._v(" "),
+                _vm._l(_vm.quizzes, function(quiz) {
+                  return _c(
+                    "option",
+                    { key: quiz.id, domProps: { value: quiz.id } },
+                    [_vm._v(_vm._s(quiz.title))]
+                  )
+                })
+              ],
+              2
+            )
+          ]),
+          _vm._v(" "),
           _c("div", { staticClass: "form-group col-md-6" }, [
             _c("label", { attrs: { for: "question_text" } }, [
               _vm._v("Vraagtekst")
@@ -39621,57 +39885,6 @@ var render = function() {
                 }
               }
             })
-          ]),
-          _vm._v(" "),
-          _c("div", { staticClass: "form-group col-md-4" }, [
-            _c("label", { attrs: { for: "quiz" } }, [_vm._v("Toets")]),
-            _vm._v(" "),
-            _c(
-              "select",
-              {
-                directives: [
-                  {
-                    name: "model",
-                    rawName: "v-model",
-                    value: _vm.question.quiz_id,
-                    expression: "question.quiz_id"
-                  }
-                ],
-                staticClass: "form-control",
-                attrs: { id: "quiz", required: "" },
-                on: {
-                  change: function($event) {
-                    var $$selectedVal = Array.prototype.filter
-                      .call($event.target.options, function(o) {
-                        return o.selected
-                      })
-                      .map(function(o) {
-                        var val = "_value" in o ? o._value : o.value
-                        return val
-                      })
-                    _vm.$set(
-                      _vm.question,
-                      "quiz_id",
-                      $event.target.multiple ? $$selectedVal : $$selectedVal[0]
-                    )
-                  }
-                }
-              },
-              [
-                _c("option", { attrs: { value: "" } }, [
-                  _vm._v("Kies een toets")
-                ]),
-                _vm._v(" "),
-                _vm._l(_vm.initialQuizzes, function(quiz) {
-                  return _c(
-                    "option",
-                    { key: quiz.id, domProps: { value: quiz.id } },
-                    [_vm._v(_vm._s(quiz.title))]
-                  )
-                })
-              ],
-              2
-            )
           ])
         ]),
         _vm._v(" "),

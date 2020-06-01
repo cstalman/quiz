@@ -3,14 +3,24 @@
         <h2 class="my-4">Antwoord bewerken</h2>
         <form class="answer-form" @submit.prevent="save">
             <div class="form-row">
-                <div class="form-group col-md-4">
+                 <div v-if="this.id">
+                </div>
+                <div v-else class="form-group col-md-2">
+                    <label for="quiz">Toets</label>
+                    <select id="quiz" class="form-control" v-model="quizId" @change="fetchQuestions" required>
+                        <option v-for="quiz in quizzes" :value="quiz.id" :key="quiz.id">{{quiz.title}}</option>
+                    </select>
+                </div>
+                 <div v-if="this.id">
+                </div>
+                <div v-else class="form-group col-md-3">
                     <label for="question">Vraag</label>
                     <select id="question" class="form-control" v-model="answer.question_id" required>
                         <option value="">Kies een vraag</option>
                         <option v-for="question in questions" :value="question.id" :key="question.id">{{question.text}}</option>
                     </select>
                 </div>
-                <div class="form-group col-md-6">
+                <div class="form-group col-md-5">
                     <label for="answer_text">Antwoord</label>
                     <input type="text" class="form-control" id="answer_text" v-model="answer.text" required>
                 </div>
@@ -44,15 +54,21 @@
     }
 
     export default {
-        props: ['initial-questions', 'id'],
+        props: ['initialQuizzes', 'initialQuestions', 'id'],
         data() {
             return {
-                questions: _.cloneDeep(this.initialQuestions), 
                 answer: newAnswer(),
-                errors: []
+                errors: [],
+                quizId: '',
+                questionId: this.initialQuestions[0].id,
+                quizzes: [],
+                questions: [], 
+                answers: []
             };
         },
         created() {
+            this.fetchQuizzes();
+            this.fetchQuestions();
             if(this.id) {
                 axios.get('/api/answers/' + this.id)
                     .then(res => this.answer = res.data);
@@ -63,6 +79,14 @@
             next();
         },
         methods: {
+            fetchQuizzes() {
+                axios.get('/api/quizzes')
+                    .then(res => this.quizzes = res.data);
+            },
+            fetchQuestions() {
+                axios.get(`/api/quizzes/${this.quizId}/questions`)
+                    .then(res => this.questions = res.data);
+            },
             save() {
                 let url = '/api/answers/add';
                 if (this.id) {
