@@ -45,21 +45,3 @@
            
     }
 </script>
-
-<style scoped>
-    input {
-        margin-right: 10px;
-    }
-    
-    hr {
-        margin-bottom: 10px;
-        max-width: 1140px;
-    }
-
-    @media (max-width: 632px) {
-        input{
-            margin-bottom: 10px;
-        }
-    }
-
-</style>

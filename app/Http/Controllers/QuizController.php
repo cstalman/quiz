@@ -110,6 +110,7 @@ class QuizController extends Controller
     {
         $user_id = auth()->user()->id;
 
+
         $quizzesDone = Quiz::join('questions', 'quizzes.id', '=', 'questions.quiz_id')
             ->leftJoin('questionnaires', function($join) use ($user_id) {
                 $join->on('questionnaires.question_id', 'questions.id');
