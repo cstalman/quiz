@@ -1,5 +1,6 @@
 <?php
 
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -16,6 +17,8 @@ use Illuminate\Support\Facades\Route;
 Auth::routes(['verify' => true]);
 
 Route::get('/', 'HomeController@index')->name('home')->middleware('verified');
+
+Route::get('/quiz-preview/{quiz}', 'HomeController@preview');
 
 Route::get('/quiz-taker/{any?}', 'HomeController@index')
     ->where('any', '.*');

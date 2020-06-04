@@ -2,16 +2,14 @@
     <div class="container">
         <h1>Toetsen</h1>
 
-        <router-view :initial-quizzes="quizzes" :initial-questions="questions"></router-view>
+        <router-view :initial-quizzes="quizzes" :initial-questions="questions" :quizId="quizId"></router-view>
 
     </div>
 </template>
 
 <script>
     import VueRouter from 'vue-router';
-    import QuizList from './QuizList.vue';
     import QuizQA from './QuizQA.vue';
-    import QuizResult from './QuizResult.vue';
 
     export default {
         props: ['quizzes', 'questions'],
@@ -20,30 +18,15 @@
             base: 'quiz-taker',
             routes: [
                 {
-                    path: '/quizzes',
-                    name: 'quizzes',
-                    component: QuizList
-                },
-                {
-                    path: '/quiz/:id',
+                    path: '/quiz-preview/:id',
                     name: 'quiz-qa',
                     component: QuizQA,
-                    props: true
-                },
-                {
-                    path: '/quiz-result/:id',
-                    name: 'quiz-result',
-                    component: QuizResult,
                     props: true
                 },
                 {
                     path: '/',
                     redirect: {name: 'quizzes'}
                 },
-                {
-                    path: '*',
-                    redirect: '/'
-                }
             ]
         })
 

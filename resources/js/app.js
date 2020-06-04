@@ -22,7 +22,7 @@ window.Vue = require('vue');
 //Vue.component('quiz-manager', require('./components/QuizManager.vue').default);
 Vue.component('quiz-editor', require('./components/QuizEditor.vue').default);
 Vue.component('quiz-taker', require('./components/QuizTaker.vue').default);
-
+Vue.component('quiz-preview', require('./components/QuizPreview.vue').default);
 /**
  * Next, we will create a fresh Vue application instance and attach it to
  * the page. Then, you may begin adding components to this application

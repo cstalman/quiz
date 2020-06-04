@@ -1,6 +1,9 @@
 <template>
     <div class="container">
-        <h2 class="my-4">Vragen</h2>
+        <h2 class="my-4">Vragen toets {{ quiz.title }}</h2>
+        <div v-if="preview" class="alert alert-warning" role="alert">
+            Dit is een preview: de antwoorden worden niet opgeslagen!
+        </div>
         <div class="row justify-content-center">
             <div class="col-sm-6">
                 <div class="alert alert-primary fade show my-4" v-show="feedback">
@@ -28,9 +31,12 @@
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
-                <div class="my-4">
+                <div v-if="preview" class="my-4">
+                    <a href="/" class="btn btn-primary d-inline-block mb-2 ml-2 text-white remove"><i class="fa fa-bars"></i> Terug naar de Editor</a>
+                </div>
+                <div v-else class="my-4">
                     <router-link :to="{name: 'quizzes'}">
-                        <a class="btn btn-primary d-inline-block mb-2 ml-2 text-white remove"><i class="fa fa-bars"></i> Terug naar toetsen</a>
+                        <a class="btn btn-primary d-inline-block mb-2 ml-2 text-white remove"><i class="fa fa-bars"></i> Inleveren en terug naar toetsen</a>
                     </router-link>
                 </div>
             </div>
@@ -51,20 +57,38 @@
         data() {
             return {
                 quizId: this.initialQuizzes[0].id,
+                quiz: '',
                 questions: [],
                 answers : [],
-                feedback: ''
+                feedback: '',
+                preview: true
             }
         },
         created() {
+            this.fetchQuiz();
             this.fetchQuizQa();
+            this.setPreview();
         },
         methods: {
+            setPreview() {
+                if (this.$route.path.includes('preview')) {
+                    this.preview = true;
+                } else  {
+                    this.preview = false;
+                }
+            },
+            fetchQuiz() {
+                axios.get('/api/quizzes/' + this.$route.params.id + '/')
+                    .then(res => this.quiz = res.data);
+            },
             fetchQuizQa() {
                 axios.get('/api/quizzes/' + this.$route.params.id + '/qa')
                     .then(res => this.questions = res.data);
             },
             saveAnswer() {
+                if(this.preview) {
+                    return;
+                }
                 axios.post('/api/questionnaire/insup/', {
                     answer: this.answer_id, 
                     question: this.question_id

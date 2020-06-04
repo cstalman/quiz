@@ -31,6 +31,7 @@
     import QuestionList from './QuestionList.vue';
     import Answer from './Answer.vue';
     import AnswerList from './AnswerList.vue';
+    import QuizPreview from './QuizPreview.vue';
 
     export default {
         props: ['quizzes', 'questions'],       
@@ -78,6 +79,11 @@
                     name: 'edit-answer',
                     component: Answer,
                     props: true
+                },
+                { 
+                    path: '/../quiz-preview/:id', 
+                    name: 'quiz-preview',
+                    component: QuizPreview 
                 },
                 {
                     path: '*',

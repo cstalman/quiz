@@ -4,16 +4,19 @@
         <form class="question-form" @submit.prevent="saveQuizzes"> 
             <a @click="addQuiz" class="btn btn-primary d-inline-block mb-2 text-white add"><i class="fa fa-plus-circle"></i> Toets toevoegen</a>
             <div class="form-row" v-for="(quiz, index) in quizzes" :key="quiz.id">
-                <div class="form-group col-md-4">
+                <div class="form-group col-md-3">
                     <input type="text" class="form-control" v-model="quiz.title" :ref="quiz.title">
                 </div>
-                <div class="form-group col-md-6">
+                <div class="form-group col-md-5">
                     <input type="text" class="form-control" v-model="quiz.description">
                 </div>
                 <div class="form-group col-md-2">
-                    <a @click="removeQuiz(index)" class="btn btn-primary d-inline-block mb-2 ml-2 text-white remove"><i class="fa fa-times-circle"></i> Verwijderen</a>
-                <!--<router-link :to="{name: 'questions', params: { key: quiz.id }}" class='btn btn-primary d-inline-block mb-2 ml-2 text-white remove'><i class="fa fa-question-circle"></i> Vragen</router-link>-->
+                    <a @click="removeQuiz(index)" class="btn btn-primary d-inline-block mb-2 ml-2 text-white remove"><i class="fa fa-times-circle"></i> Verwijder toets</a>
                 </div>
+                <div class="form-group col-md-2">
+                    <a :href="'/quiz-preview/' + quiz.id" class="btn btn-primary d-inline-block mb-2 text-white remove"><i class="fa fa-search"></i> Preview toets</a>
+                </div>
+
             </div>
             <button type="submit" class="btn btn-primary d-inline-block mb-2 text-white"><i class="fa fa-check-circle"></i> Opslaan</button>
             <div>{{ feedback }}</div>

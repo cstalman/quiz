@@ -38,6 +38,7 @@ return [
     'dimensions'     => ':Attribute heeft geen geldige afmetingen voor afbeeldingen.',
     'distinct'       => ':Attribute heeft een dubbele waarde.',
     'email'          => ':Attribute is geen geldig e-mailadres.',
+    'email_domain'   => 'Bedankt voor de interesse, maar op dit moment wordt deze dienst alleen aangeboden aan A12 gebruikers',
     'ends_with'      => ':Attribute moet met één van de volgende waarden eindigen: :values',
     'exists'         => ':Attribute bestaat niet.',
     'file'           => ':Attribute moet een bestand zijn.',

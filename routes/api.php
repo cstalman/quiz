@@ -24,7 +24,9 @@ Route::get('/user', function (Request $request) {
 //admin routes
 
 /* quiz routes */
+
 Route::get('/quizzes', 'QuizController@quizzes');
+
 Route::post('/quizzes/insup', 'QuizController@insup');
 Route::delete('/quizzes/{quiz}', 'QuizController@destroy');
 
